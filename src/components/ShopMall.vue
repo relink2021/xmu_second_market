@@ -69,7 +69,7 @@
           background-color="#333744"
           text-color="#fff"
           active-text-color="#409eff"
-          :default-active="activeIndex2"
+          :default-active="aside_index"
         >
           <!-- 一级菜单 -->
           <el-submenu
@@ -124,7 +124,7 @@ export default {
       //搜索输入
       query: "",
       top_index: "Goods",
-      activeIndex2: "",
+      aside_index: "",
       // 查询信息实体
       total: 0,
       // 菜单列表
@@ -147,9 +147,13 @@ export default {
   },
   // onload 事件
   created() {
-    // 保存刷新前的页签
+    // 顶栏保存刷新前的页签
     if (window.sessionStorage.getItem('top_index') != null) {
       this.top_index = window.sessionStorage.getItem('top_index');
+    }
+    // 侧边栏保存刷新前的页签
+    if (window.sessionStorage.getItem('aside_index') != null) {
+      this.aside_index = window.sessionStorage.getItem('aside_index');
     }
     this.getMenuList();
     this.username = localStorage.getItem("username");
@@ -187,7 +191,7 @@ export default {
     saveKind(sub_kind, id) {
       window.sessionStorage.setItem("sub_kind", sub_kind);
       Utils.$emit("getItemList", "msg");
-      window.sessionStorage.setItem("menu_id", id);
+      window.sessionStorage.setItem("aside_index", id);
     },
     // 存储查询信息，跨页面进行商品信息的更新
     saveQuery() {
