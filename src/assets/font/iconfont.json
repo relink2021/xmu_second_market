@@ -1,0 +1,23 @@
+{
+  "id": "2650401",
+  "name": "vueSecondHandMarket",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "7441460",
+      "name": "password",
+      "font_class": "password",
+      "unicode": "e64a",
+      "unicode_decimal": 58954
+    },
+    {
+      "icon_id": "18991524",
+      "name": "administrator search",
+      "font_class": "administratorsearch",
+      "unicode": "e82a",
+      "unicode_decimal": 59434
+    }
+  ]
+}
