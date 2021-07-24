@@ -1,6 +1,14 @@
 <template>
   <el-card>
-    <router-view></router-view>
+    <el-menu mode="horizontal" :default-active="filter_index">
+      <el-menu-item index="0" @click="filter0">综合</el-menu-item>
+      <el-menu-item index="3" @click="filter3">数量</el-menu-item>
+      <el-submenu index="sub">
+        <template slot="title">价格</template>
+        <el-menu-item index="1" @click="filter1">价格从高到低</el-menu-item>
+        <el-menu-item index="2" @click="filter2">价格从低到高</el-menu-item>
+      </el-submenu>
+    </el-menu>
     <!-- 商品排列 -->
     <div class="shoplist">
       <el-row :gutter="15">
@@ -50,7 +58,28 @@
 import Utils from "../assets/util.js";
 export default {
   created() {
-    this.getItemList();
+    // 刷新阻止页签切换
+    var status = window.sessionStorage.getItem('filter_index');
+    if(status != null){
+      this.filter_index = window.sessionStorage.getItem('filter_index');
+      switch(status) {
+        case "0": 
+          this.filter0();
+          break;
+        case "1":
+          this.filter1();
+          break;
+        case "2":
+          this.filter2();
+          break;
+        case "3":
+          this.filter3();
+          break;
+      }
+    }
+    else{
+      this.getItemList();
+    }
   },
   data() {
     return {
@@ -60,30 +89,32 @@ export default {
         type: "",
         pageNum: 1,
         pageSize: 8,
+        filter: 0,
       },
       total: 0,
       // 商品列表
       itemList: [],
       menuList: [],
       sub_kind: "",
+      filter_index: "0",
     };
   },
   methods: {
     // 获取商品列表
     async getItemList() {
-      if(this.queryInfo.type != window.sessionStorage.getItem('sub_kind')){
+      if (this.queryInfo.type != window.sessionStorage.getItem("sub_kind")) {
         this.queryInfo.pageNum = 1;
       }
-      if(window.sessionStorage.getItem('query') != null){
-        this.queryInfo.query = window.sessionStorage.getItem('query');
+      if (window.sessionStorage.getItem("query") != null) {
+        this.queryInfo.query = window.sessionStorage.getItem("query");
       }
-      this.queryInfo.type = window.sessionStorage.getItem('sub_kind');
+      this.queryInfo.type = window.sessionStorage.getItem("sub_kind");
       const { data: res } = await this.$http.get("allItem", {
         params: this.queryInfo,
       });
       this.itemList = res.data;
       this.total = res.number;
-      console.log(this.total);
+      console.log(this.itemList);
     },
     // 获取图片url
     getImgUrl(url) {
@@ -108,6 +139,27 @@ export default {
       this.queryInfo.pageNum = newPage;
       this.getItemList();
     },
+    // 选择筛选条件
+    filter0() {
+      window.sessionStorage.setItem("filter_index", "0");
+      this.queryInfo.filter = 0;
+      this.getItemList();
+    },
+    filter1() {
+      window.sessionStorage.setItem("filter_index", "1");
+      this.queryInfo.filter = 1;
+      this.getItemList();
+    },
+    filter2() {
+      window.sessionStorage.setItem("filter_index", "2");
+      this.queryInfo.filter = 2;
+      this.getItemList();
+    },
+    filter3() {
+      window.sessionStorage.setItem("filter_index", "3");
+      this.queryInfo.filter = 3;
+      this.getItemList();
+    },
   },
   mounted() {
     var that = this;
@@ -127,5 +179,15 @@ export default {
   color: rgb(240, 18, 18);
   font-size: 25px;
   margin-top: 20cm;
+}
+.el-menu--horizontal > .el-menu-item {
+  height: 40px;
+  line-height: 40px;
+}
+.el-menu--horizontal {
+  margin-bottom: 20px;
+}
+.shop {
+  height: 360px;
 }
 </style>

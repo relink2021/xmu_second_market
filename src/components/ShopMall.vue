@@ -291,15 +291,6 @@ export default {
   //position:absolute;
   width: 100%;
   height: auto;
-  .shoplist {
-    width: 90%;
-    position: relative;
-
-    left: 5%;
-    .item {
-      position: absolute;
-    }
-  }
   .el-row {
     margin-left: 5%;
     margin-top: 5%;
@@ -332,12 +323,6 @@ export default {
         float: right;
       }
     }
-  }
-  .el-pagination {
-    position: relative;
-    left: 18%;
-    width: 65%;
-    margin-top: 30px;
   }
 }
 

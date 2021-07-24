@@ -18,3 +18,8 @@ HTML,body,#app{
 .el-form--label-top .el-form-item__label {
     line-height: 20px;
 }
+
+.el-menu--horizontal>.el-submenu .el-submenu__title {
+    height: 40px;
+    line-height: 40px;
+}
