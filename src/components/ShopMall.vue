@@ -21,28 +21,22 @@
       <!-- 顶栏 -->
       <div class="line"></div>
       <el-menu
-        :default-active="activeIndex"
+        :default-active="top_index"
         class="el-menu-demo"
         mode="horizontal"
-        @select="handleSelect"
         background-color="#333744"
         text-color="#fff"
         active-text-color="#ffd04b"
         :router="true"
       >
-        <el-menu-item index="ShopMall">
-          <template slot="title">
-            <span>首页</span>
-          </template>
-        </el-menu-item>
-        <el-menu-item index="PersonalCenter">
-          <template slot="title">
-            <span>个人中心</span>
-          </template>
-        </el-menu-item>
-        <el-menu-item index="MyEstablish">
-          <template slot="title">
-            <span>我要发布</span>
+        <el-menu-item
+          :index="top_item.path"
+          v-for="top_item in top_list"
+          :key="top_item.path"
+          @click="save_top_index(top_item.path)"
+        >
+          <template>
+            <span>{{ top_item.name }}</span>
           </template>
         </el-menu-item>
       </el-menu>
@@ -129,25 +123,41 @@ export default {
       menuList: [],
       //搜索输入
       query: "",
-      activeIndex: "ShopMall",
+      top_index: "Goods",
       activeIndex2: "",
       // 查询信息实体
       total: 0,
       // 菜单列表
       menuList: [],
+      top_list: [
+        {
+          path: "Goods",
+          name: "首页",
+        },
+        {
+          path: "PersonalCenter",
+          name: "个人中心",
+        },
+        {
+          path: "MyEstablish",
+          name: "我要发布",
+        },
+      ],
     };
   },
   // onload 事件
   created() {
+    // 保存刷新前的页签
+    if (window.sessionStorage.getItem('top_index') != null) {
+      this.top_index = window.sessionStorage.getItem('top_index');
+    }
     this.getMenuList();
     this.username = localStorage.getItem("username");
-    console.log(this.sub_kind);
   },
   methods: {
     // 获取侧边栏菜单
     async getMenuList() {
       const { data: res } = await this.$http.get("Menus");
-      console.log(res);
       if (res.flag != 200) return this.$message.error("获取列表失败！！！"); // 访问失败
       this.menuList = res.menus; // 访问成功，数据回填
     },
@@ -168,18 +178,25 @@ export default {
     establish() {
       this.$router.push("/Establish");
     },
+    // 存储选中的物品名称，跳转至商品详情界面并根据物品名称显示详情
     goodpage(item_name) {
       localStorage.setItem("item_name", item_name);
       this.$router.push("/GoodPage");
     },
+    // 存储当前的商品分类，跨页面进行商品信息的更新
     saveKind(sub_kind, id) {
       window.sessionStorage.setItem("sub_kind", sub_kind);
       Utils.$emit("getItemList", "msg");
       window.sessionStorage.setItem("menu_id", id);
     },
-    saveQuery(){
-      window.sessionStorage.setItem('query',this.query);
+    // 存储查询信息，跨页面进行商品信息的更新
+    saveQuery() {
+      window.sessionStorage.setItem("query", this.query);
       Utils.$emit("getItemList", "msg");
+    },
+    // 存储顶栏的激活状态
+    save_top_index(cur_index){
+      window.sessionStorage.setItem('top_index',cur_index);
     }
   },
   mounted() {},
