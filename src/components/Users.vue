@@ -527,6 +527,6 @@ export default {
   font-size: 12px;
 }
 .el-input{
-  width: 50px;
+  width: 95%;
 }
 </style>

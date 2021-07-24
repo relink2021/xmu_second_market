@@ -11,6 +11,10 @@ HTML,body,#app{
     min-width: 350px;
 }
 
-.el-form-item__label{
+.el-form-item--small .el-form-item__content, .el-form-item--small .el-form-item__label {
+    line-height: 20px;
+}
+
+.el-form--label-top .el-form-item__label {
     line-height: 20px;
 }
