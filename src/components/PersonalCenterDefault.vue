@@ -2,7 +2,7 @@
   <!-- 引入布局 -->
   <el-container class="PC-container">
     <!-- 头部 -->
-    <el-header style="width: auto; height: auto;">
+    <el-header style="width: auto; height: 60px;">
       <!-- 标题图标文字 -->
       <div>
         <img
@@ -34,13 +34,12 @@
           ><a
             href="https://www.xmu.edu.cn"
             target="_blank"
-            style="font-size: 20px"
-            ><span style="font-size: 20px">首页</span></a
+            ><span style="font-size: 16px; line-height: 56px">首页</span></a
           ></el-menu-item
         >
         <el-submenu index="2">
           <template slot="title"
-            ><span style="font-size: 20px">账户设置</span></template
+            ><span style="font-size: 16px; line-height: 56px; height: 56px;">账户设置</span></template
           >
           <el-submenu index="2-1">
             <template slot="title">安全设置</template>
@@ -90,12 +89,6 @@
           </el-submenu>
         </el-submenu>
       </el-menu>
-      <!-- 搜索栏 -->
-      <div style="margin-top: -5px; margin-left: 400px" align="right">
-        <el-input>
-          <el-button slot="append" icon="el-icon-search"></el-button>
-        </el-input>
-      </div>
     </el-header>
     <!-- 主体 -->
     <el-container>

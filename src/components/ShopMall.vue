@@ -72,13 +72,19 @@
           :default-active="aside_index"
         >
           <!-- 一级菜单 -->
+          <el-menu-item index="0" @click="clearKind">
+            <template>
+              <i class="el-icon-shopping-bag-1"></i>
+              <span>全部商品</span>
+            </template>
+          </el-menu-item>
           <el-submenu
             :index="item.id + ''"
             v-for="item in menuList"
             :key="item.id"
           >
             <template slot="title">
-              <i class="el-icon-menu"></i>
+              <i :class="iconList[item.id]"></i>
               <span>{{ item.title }}</span>
             </template>
             <!-- 二级菜单 -->
@@ -89,7 +95,7 @@
               @click="saveKind(it.title, it.id.toString())"
             >
               <template slot="title">
-                <i class="el-icon-menu"></i>
+                <i :class="iconList[it.id]"></i>
                 <span>{{ it.title }}</span>
               </template>
             </el-menu-item>
@@ -124,7 +130,7 @@ export default {
       //搜索输入
       query: "",
       top_index: "Goods",
-      aside_index: "",
+      aside_index: "0",
       // 查询信息实体
       total: 0,
       // 菜单列表
@@ -143,6 +149,28 @@ export default {
           name: "我要发布",
         },
       ],
+      iconList: {
+        "100":"iconfont icon-shumachanpin",
+        "200":"iconfont icon-jiadian",
+        "300":"iconfont icon-clothes",
+        "400":"iconfont icon-yundong",
+        "500":"el-icon-collection",
+        "101":"iconfont icon-shouji",
+        "102":"iconfont icon-xiangji",
+        "103":"iconfont icon-diannao",
+        "201":"iconfont icon-jiadiandianqi",
+        "202":"iconfont icon-yingyinjiaocai",
+        "301":"iconfont icon-nvzhuang",
+        "302":"iconfont icon-nanzhuang",
+        "303":"iconfont icon-nvxie",
+        "304":"iconfont icon-fushi-nanxie",
+        "305":"iconfont icon-xiangbao",
+        "306":"iconfont icon-icon-test",
+        "401":"iconfont icon-jianshenqicai",
+        "402":"iconfont icon-zihangche",
+        "501":"iconfont icon-book1",
+        "502":"iconfont icon-keben",
+      }
     };
   },
   // onload 事件
@@ -192,6 +220,12 @@ export default {
       window.sessionStorage.setItem("sub_kind", sub_kind);
       Utils.$emit("getItemList", "msg");
       window.sessionStorage.setItem("aside_index", id);
+    },
+    // 清空当前的商品分类
+    clearKind() {
+       window.sessionStorage.clear("sub_kind");
+       Utils.$emit("getItemList", "msg");
+       window.sessionStorage.setItem("aside_index", '0');
     },
     // 存储查询信息，跨页面进行商品信息的更新
     saveQuery() {
@@ -283,6 +317,10 @@ export default {
     width: 99.9%;
     border-right: none;
   }
+}
+
+.iconfont{
+  margin-right: 7px;
 }
 
 //主体样式

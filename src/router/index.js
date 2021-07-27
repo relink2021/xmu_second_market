@@ -51,10 +51,6 @@ const routes = [
     component:Register
   },
   {
-    path:"/ShoppingCart",
-    component:ShoppingCart
-  },
-  {
     path:"/Home",
     component:Home
   },

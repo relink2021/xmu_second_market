@@ -5,6 +5,7 @@ import router from './router'
 import './assets/css/global.css'
 import './assets/font/iconfont.css'
 import './assets/font2/iconfont.css'
+import './assets/font3/iconfont.css'
 import axios from 'axios'
 
 Vue.prototype.$http = axios

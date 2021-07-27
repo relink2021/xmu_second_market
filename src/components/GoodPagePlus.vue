@@ -1,54 +1,22 @@
 <template>
-  <div class="publish_product_div">
+   <el-card>
+    <el-page-header @back="goBack" content="商品详情"> </el-page-header>
     <div class="product_img_div">
       <img :src="itemInfo.item_img" class="product_img" />
     </div>
     <div class="product_info_div">
-      <div class="itemname">{{ this.itemInfo.item_name }}</div>
-      <div class="perprice">
-        <div class="perpricetag">单价：</div>
-        <div class="perpriceinfo">
-          {{ this.itemInfo.price }}
-        </div>
-      </div>
-      <div class="seller">
-        <div class="sellertag">卖家：</div>
-        <div class="sellerinfo">
-          {{ this.itemInfo.username }}
-        </div>
-      </div>
-      <div class="fineness">
-        <div class="finenesstag">成色：</div>
-        <div class="finenessinfo">
-          {{ this.itemInfo.fineness }}
-        </div>
-      </div>
-      <div class="amount">
-        <div class="amounttag">数量：</div>
-        <div class="amountinfo">
-          {{ this.itemInfo.amount }}
-        </div>
-      </div>
-      <div class="kind">
-        <div class="kindtag">分类：</div>
-        <div class="kindinfo">
-          {{ this.itemInfo.main_kind }}-{{ this.itemInfo.sub_kind }}
-        </div>
-      </div>
-      <div class="contact">
-        <div class="contacttag">详情：</div>
-        <div class="contactinfo">
-          {{ this.itemInfo.contact }}
-        </div>
-      </div>
-      <el-button
-        class="specialbutton"
-        icon="el-icon-shopping-cart-2"
-        @click="addCart"
-        >加入购物车</el-button
-      >
+      <el-divider content-position="center" class="divider1">商品信息</el-divider>
+      <div class="itemname">商品名称：{{this.itemInfo.item_name}} </div>
+      <div class="itemname">商品分类: {{this.itemInfo.main_kind}}-{{this.itemInfo.sub_kind}} </div>
+      <div class="itemname">商品成色：{{this.itemInfo.fineness}} </div>
+      <div class="itemname">商品单价：{{this.itemInfo.price}} </div>
+      <div class="itemname">商品详情：{{this.itemInfo.item_detail}} </div>
+      <el-divider content-position="center" class="divider1">卖家信息</el-divider>
+      <div class="itemname">卖家名称：{{this.itemInfo.username}} </div>
+      <div class="itemname">联系方式：{{this.itemInfo.contact}} </div>
+      <el-button class="specialbutton" icon="el-icon-shopping-cart-2" @click="addCart">加入购物车</el-button>
     </div>
-  </div>
+   </el-card>
 </template>
 
 <script>
@@ -67,6 +35,7 @@ export default {
         price: "",
         amount: "",
         contact: "",
+        item_detail: "",
       },
       addForm: {
         sellername: "",
@@ -150,6 +119,9 @@ export default {
       this.$router.push("/Establish");
     },
     shopmall() {
+      this.$router.push("/ShopMall");
+    },
+    goBack() {
       this.$router.push("/ShopMall");
     },
   },
@@ -274,7 +246,6 @@ export default {
   height: auto;
   margin-left: 5%;
   margin-top: 0%;
-  margin-bottom: 10%;
   /*background-color: red;*/
   background-color: white;
   border-radius: 10px;
@@ -282,25 +253,31 @@ export default {
   display: inline-block;
 }
 .product_img_div {
-  width: 40%;
+  width: 600px;
   height: auto;
   float: left;
   margin-left: 4%;
   margin-top: 5%;
 }
 .product_img {
-  width: 70%;
-  margin-top: 5%;
+  width: 400px;
+  height: 380px;
 }
 .product_info_div {
   text-align: left;
   width: 35%;
   display: block;
   float: left;
-  margin-left: 5%;
+  margin-left: 1%;
   line-height: 2.1em;
-  margin-bottom: 10%;
-  margin-top: 7%;
+  margin-top: 5%;
+  margin-bottom: 8%;
+  .divider1 {
+    font-family: Microsoft JhengHei;
+    font-weight: bold;
+    color: black;
+    font-size: 20px;
+  }
   .itemname {
     font-family: Microsoft JhengHei;
     font-weight: bold;
@@ -399,8 +376,8 @@ export default {
     width: 150px;
     background-color: #e65340;
     color: #fff;
-    margin-left: 250px;
-    margin-top: 20px;
+    margin-left: 335px;
+    // margin-top: 20px;
   }
 }
 
@@ -416,5 +393,14 @@ export default {
   p {
     text-align: center;
   }
+}
+
+.el-divider__text, .el-link {
+    font-weight: 800;
+    font-size: 20px;
+}
+
+.el-card{
+  height: auto;
 }
 </style>

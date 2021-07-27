@@ -1,10 +1,10 @@
 <template>
   <el-card>
     <el-menu mode="horizontal" :default-active="filter_index">
-      <el-menu-item index="0" @click="filter0">综合</el-menu-item>
-      <el-menu-item index="3" @click="filter3">数量</el-menu-item>
+      <el-menu-item index="0" @click="filter0" style="line-height: 60px; height: 60px">综合</el-menu-item>
+      <el-menu-item index="3" @click="filter3" style="line-height: 60px; height: 60px">数量</el-menu-item>
       <el-submenu index="sub">
-        <template slot="title">价格</template>
+        <template slot="title" style="line-height: 60px; height: 60px">价格</template>
         <el-menu-item index="1" @click="filter1">价格从高到低</el-menu-item>
         <el-menu-item index="2" @click="filter2">价格从低到高</el-menu-item>
       </el-submenu>
@@ -90,7 +90,7 @@ export default {
       // 查询信息实体
       queryInfo: {
         query: "",
-        type: "",
+        type: "全部商品",
         pageNum: 1,
         pageSize: 8,
         filter: 0,
@@ -115,6 +115,7 @@ export default {
         item_detail: "",
         isbought: "",
       },
+      
     };
   },
   methods: {
@@ -125,8 +126,12 @@ export default {
       }
       if (window.sessionStorage.getItem("query") != null) {
         this.queryInfo.query = window.sessionStorage.getItem("query");
+      } 
+      if (window.sessionStorage.getItem("sub_kind") != null) {
+        this.queryInfo.type = window.sessionStorage.getItem("sub_kind");
+      } else {
+        this.queryInfo.type = null;
       }
-      this.queryInfo.type = window.sessionStorage.getItem("sub_kind");
       const { data: res } = await this.$http.get("allItem", {
         params: this.queryInfo,
       });

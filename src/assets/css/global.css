@@ -20,8 +20,8 @@ HTML,body,#app{
 }
 
 .el-menu--horizontal>.el-submenu .el-submenu__title {
-    height: 40px;
-    line-height: 40px;
+    /* height: 40px; */
+    /* line-height: 40px; */
 }
 
 .el-page-header__content {
@@ -42,4 +42,8 @@ HTML,body,#app{
     color: #C0C4CC;
     margin: 40px 20px 16px;
     line-height: 50px;
+}
+
+.el-menu {
+    border-right: none;
 }

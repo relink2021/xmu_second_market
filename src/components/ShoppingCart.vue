@@ -1,42 +1,6 @@
 <template>
 <!-- 购物车界面 -->
-  <div>
-    <!-- 头部区域 -->
-    <el-header>
-      <div>
-        <img src="../assets/logo-mini.png" alt />
-        <span>购物车（{{this.total_amount}}）</span>
-      </div>
-      <!-- 搜索块 -->
-      <!-- <el-input class="search"
-          placeholder="搜索购物车中的二手商品"
-          v-model="queryInfo.query"
-          clearable
-          @input="getShopCarList"
-        >
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="getShopCarList"
-          ></el-button>
-        </el-input> -->
-      <!-- 用户头像 -->
-      <div class="user">
-        <i class="el-icon-user-solid" />
-        <el-button round>登录/注册</el-button>
-      </div>
-    </el-header>
-
-    <!-- 导航栏 -->
-    <ul>
-      <li><a class="active" href="#home">首页</a></li>
-      <li><a href="#news">二手商城</a></li>
-      <li><a href="#contact">联系我们</a></li>
-      <li><a href="#about">我要发布</a></li>
-    </ul>
-
-    <!-- 主体部分 -->
-    
+  <div> 
     <el-table :data="shopCar" 
           ref="multipleTable" 
           @selection-change="handleSelectionChange"
@@ -103,7 +67,6 @@
         </el-col>
         <button class="footer_right" @click="submmit">结算</button>
     </el-footer>
- 
   </div>
 </template>
 
@@ -339,27 +302,6 @@ export default {
   width: 100%;
 }
 
-//头部样式
-.el-header {
-  z-index: 1;
-  background-color: #2f3235;
-  justify-content: space-between; //左右贴边
-  padding-left: 0%; //左边界
-  color: #fff;
-  font-size: 30px;
-  display: flex;
-  > div {
-    display: flex;
-    align-items: center;
-    span {
-      margin-left: 15px;
-      font-weight: bold;
-    }
-  }
-
-}
-
-
 //商品信息样式
 .seller{
   margin:5px;
@@ -412,33 +354,5 @@ el-footer{
   font-weight: bold;
   padding-top: 1%;
   float:right;
-}
-
-
-
-//导航栏
-
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #111;
-}
-
-li {
-  float: right;
-}
-
-li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-li a:hover {
-  background-color: #111;
 }
 </style>>
