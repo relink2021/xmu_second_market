@@ -90,13 +90,20 @@
             <!-- action:图片上传的API地址 
                    handlePreview: 预览图
               -->
+            <!-- "http://localhost:9000/upload" -->
             <el-upload
-              :action="uploadActionURL"
-              :on-preview="handlePreview"
-              :on-remove="handleRemove"
+              drag
+              action="http://localhost:9000/file/upload"
+              :on-change="saveImgURL"
+              :limit="1"
+              accept=".jpeg .png .jpg"
               list-type="picture"
             >
-              <el-button size="small" type="primary">点击上传</el-button>
+              <i class="el-icon-upload"></i>
+              <!-- <el-button size="small" type="primary">点击上传</el-button> -->
+              <div class="el-upload__text">
+                将文件拖到此处，或<em>点击上传</em>
+              </div>
             </el-upload>
           </el-tab-pane>
           <el-tab-pane label="商品详情" name="3">
@@ -116,10 +123,12 @@
 
 <script>
 export default {
+  created() {
+    this.imgFlag = false;
+  },
   data() {
     return {
       activeIndex: "0",
-      uploadActionURL: "http://localhost:9000/upload",
       // 添加商品的表单数据对象
       releaseForm: {
         username: "",
@@ -131,6 +140,7 @@ export default {
         amount: "",
         comment: "",
         contact: "",
+        item_img: "",
       },
       // 添加表单的校验规则
       releaseFormRules: {
@@ -294,25 +304,13 @@ export default {
       this.releaseForm.main_kind = this.values2[0];
       this.releaseForm.sub_kind = this.values2[1];
     },
-    // 处理图片预览效果
-    handlePreview() {},
     // 处理移除图片的操作
     handleRemove() {},
     // 发布商品
     async release() {
-      // this.releaseForm.username = localStorage.getItem("username");
-      // const { data: res } = await this.$http.post(
-      //   "releaseItem",
-      //   this.releaseForm
-      // );
-      // if (res == "success") {
-      //   this.$message.success("发布商品成功"); // 信息提示
-      //   this.home();
-      // } else {
-      //   this.$message.error("发布商品失败"); // 错误提示
-      // }
       this.$refs.releaseFormRef.validate(async (valid) => {
         if (!valid) return; // 验证失败
+        if (!this.imgFlag) return;
         this.releaseForm.username = localStorage.getItem("username");
         const { data: res } = await this.$http.post(
           "releaseItem",
@@ -326,6 +324,11 @@ export default {
           this.$message.error("发布商品失败"); // 错误提示
         }
       });
+    },
+    saveImgURL(file) {
+      console.log(file.response);
+      this.releaseForm.item_img = file.response;
+      this.imgFlag = true;
     },
   },
 };

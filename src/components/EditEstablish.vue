@@ -1,53 +1,57 @@
 <template>
-  <div>
-    <!-- 头部区域 -->
-    <el-header>
-      <div>
-        <img src="../assets/logo-mini.png" alt />
-        <span>修改或删除已发布的商品</span>
-      </div>
-      <!-- 搜索块 -->
-      <input class="search" placeholder="搜索你想要的二手商品" />
-      <!-- 用户头像 -->
-      <div class="user">
-        <i class="el-icon-user-solid" />
-        <el-button round @click="login">登录/注册</el-button>
-      </div>
-    </el-header>
+<div>
+    <!-- 主体部分 -->
+    <el-table :data="releaseList" 
+          ref="multipleTable" 
+          style="width: 100%"
+          stripe  
+         >
 
-    <!-- 导航栏 -->
-    <ul>
-      <li><a class="active" @click="home">首页</a></li>
-      <li><a @click="shopmall">二手商城</a></li>
-      <li><a @click="establish">我要发布</a></li>
-    </ul>
+          <el-table-column width="55">
+          </el-table-column>
 
-    <!--中间内容区域-->
-    <div class="container">
-      <div class="item" v-for="(item, index) in releaseList" :key="index">
-        <!--详细内容区域-->
-        <div class="details">
-          <img :src="item.item_img" />
-          <div class="details_list">
-            <span>{{ item.item_name }}</span>
-            <div class="list_more">
-              <span>{{ item.main_kind }}</span>
-              <span>{{ item.sub_kind }}</span>
-            </div>
-            <div class="list_price">￥{{ item.price }}</div>
-          </div>
-        </div>
+          <el-table-column label="已发布商品详情" width="800" >
+            <template slot-scope="props">
+              <el-row :gutter="20" class="seller">
+                卖家：{{ props.row.sellername }}
+              </el-row>
+              <el-row type="flex"  justify="center" :gutter="20">
+                 <el-col :span="6" class="details">
+                   <img :src="props.row.item_img" alt />
+                 </el-col>
+                 <el-col :span="6" class="item_name">
+                   {{props.row.item_name}}
+                 </el-col>
+                 <el-col :span="6">
+                   {{ props.row.item_detail }}
+                 </el-col>
+                 <el-col :span="6" class="kind">
+                   {{props.row.main_kind}}-{{props.row.sub_kind}}
+                 </el-col>
+              </el-row>
+            </template>
+          </el-table-column>
+        
+          <el-table-column label="单价"  width="200" >
+            <template slot-scope="props" >
+            <span class="price"> ¥ {{props.row.price}} </span>
+            </template>
+          </el-table-column>
 
-        <!--购买数量区域-->
-        <div class="num">
-          <span>操作</span>
-          <div>
-            <button @click="editItemDialog(item.item_name)">修改</button>
-            <button @click="deleteGoods(item.item_name)">删除</button>
-          </div>
-        </div>
-      </div>
-      <!-- 分页区域 -->
+          <el-table-column label="数量" width="200">
+            <template slot-scope="props">
+            <span class="amount">{{props.row.amount}} </span>
+            </template>          
+          </el-table-column>
+
+          <el-table-column label="操作" width="100">
+            <template slot-scope="props">
+                <el-button @click="editItemDialog(props.row.item_name)" type="text" size="small">修改</el-button>
+                <el-button @click="deleteGoods(props.row.item_name)" type="text" size="small">删除</el-button>
+            </template> 
+          </el-table-column>
+    </el-table>
+           <!-- 分页区域 -->
       <div class="pagination">
         <el-pagination
           @size-change="handleSizeChange"
@@ -101,15 +105,16 @@
           <el-form-item label="联系方式" prop="contact">
             <el-input v-model="editForm.contact"></el-input>
           </el-form-item>
+
         </el-form>
         <!-- 底部区域 -->
         <span slot="footer" class="dialog-footer">
-          <el-button @click="eidtDialogVisible = false">取 消</el-button>
+          <el-button @click="editDialogVisible = false">取 消</el-button>
           <el-button type="primary" @click="editItemInfo">确 定</el-button>
         </span>
       </el-dialog>
+
     </div>
-  </div>
 </template>
 
 <script>
@@ -120,7 +125,15 @@ export default {
   data() {
     return {
       num_price: 0,
-      releaseList: [],
+      releaseList: [
+          {
+              sellername:"",
+              buyername:"",
+              item_name:"",
+              price:"",
+              amount:"",
+          }
+      ],
       queryInfo: {
         query: "",
         pageNum: 1,
@@ -274,14 +287,17 @@ export default {
         params: this.queryInfo,
       });
       this.releaseList = res.data;
+      console.log(this.releaseList);
       this.total = res.number;
       this.releaseList = this.releaseList.filter(
         (item) => item.username == localStorage.getItem('username')
       );
+      console.log(this.releaseList);
       this.total = this.releaseList.length;
     },
     // 显示对话框
     async editItemDialog(item_name) {
+      console.log('1');
       const { data: res } = await this.$http.get(
         "getEdit?item_name=" + item_name
       );
@@ -290,6 +306,7 @@ export default {
       this.values2[0] = this.editForm.main_kind;
       this.values2[1] = this.editForm.sub_kind;
       this.editDialogVisible = true; // 打开对话框
+      console.log(this.editDialogVisible);
     },
     handleChange1(){    
         this.editForm.fineness = this.values1[0];
@@ -398,116 +415,64 @@ export default {
     -webkit-transition: width 0.4s ease-in-out;
     transition: width 0.4s ease-in-out;
   }
-
-  img {
-    height: 65%;
-  }
 }
 
-.pagination {
-  padding: 10px;
-}
 
-.el-row {
-  position: absolute;
-}
-.container {
-  background: #fff;
-  margin-left: 100px;
-  margin-right: 100px;
-}
-.item {
-  padding: 5px 10px;
-  border-bottom: 1px solid #ccc;
-}
-.logo {
-  height: 40px;
-  /* 左右浮动布局 */
-  display: flex;
-  /* 以交叉轴的中点对齐 */
-  align-items: center;
-}
-.logo img {
-  width: 20px;
-  height: 20px;
-  margin-left: 5px;
-}
-.logo span {
-  margin-left: 5px;
-  font-size: 12px;
-}
-.details {
-  background: #f5f5f5;
-  padding: 15px;
-  font-size: 12px;
-  display: flex;
+//商品信息样式
+.seller{
+  margin:5px;
+  font-size: 10px;
 }
 .details img {
   width: 100px;
   height: 90px;
+  border-radius: 5px;
 }
-.details_list {
-  margin-left: 15px;
-  color: black;
+.item_name{
+  font-size:18px;
+  font-weight: bold;
 }
-.list_more span {
-  color: #888;
+.kind{
+  color:goldenrod;
+  font-size:15px;
+  text-align: center;
 }
-.details_list span {
-  display: block;
-  margin-top: 3px;
+.price{
+  font-size: 20px;
 }
-.list_price {
-  color: red;
-  font-size: 16px;
+.total{
+  font-size: 20px;
+  color:red;
 }
 
-.num {
-  color: #888;
-  padding: 10px;
-  /* 弹性布局 */
+//页脚
+footer {
+  width: 100%;
+  height: 50px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background: white;
+  border-top: 1px solid #ccc;
   display: flex;
-  /* 左右排列 以两侧对齐 */
-  justify-content: space-between;
+}
+.footer_left {
+  flex: 1;
+  text-align: right;
+  line-height: 50px;
+  font-size: 16px;
+  padding-right: 10px;
+}
+.footer_left span {
+  color: red;
 }
 
-.num button {
-  width: 50px;
-  height: 25px;
-  background: #caf4ff;
-  //border: none;
-  //outline: none;
-}
-.num input {
-  width: 37px;
-  height: 25px;
-  border: none;
-  text-align: center;
-  background: #fff;
-}
-
-//导航栏
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #111;
-}
-
-li {
-  float: right;
-}
-
-li a {
-  display: block;
+.footer_right {
+  background: red;
   color: white;
+  width: 150px;
+  height: 50px;
+  line-height: 50px;
   text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
 }
-
-li a:hover {
-  background-color: #111;
-}
-</style>
+</style>>

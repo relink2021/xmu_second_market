@@ -131,14 +131,168 @@
           </el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-          <el-menu-item index="EditEstablish">
+          <el-menu-item index="3" @click="editEstablish">
             <span slot="title" style="font-size: 15px">修改发布商品</span>
           </el-menu-item>
         </el-menu>
       </el-aside>
       <!-- 主体内容 -->
       <el-main>
-        <router-view></router-view>
+        <el-card>
+          <el-row>
+            <el-col :span="12" style="display:flex; width:1000px; align-items: center;" 
+              ><div class="grid-content bg-purple">
+                <!-- 点击跳转到个人资料修改页面 -->
+                <el-button circle style="margin-left: 25px"
+                  ><a
+                    href="http://localhost:8080/#/EditData"
+                    target="_blank"
+                    style="font-size: 20px"
+                    ><img src="../assets/logo.png" alt /></a
+                ></el-button>
+              </div>
+              <el-button style="border: none; margin-left: 5px"
+                ><a
+                  href="http://localhost:8080/#/EditData"
+                  target="_blank"
+                  style="font-size: 20px"
+                  >{{personInfo.username}}</a
+                ></el-button
+              >
+              <el-button style="border: none; margin-left: 25px"
+                ><a
+                  href="http://localhost:8080/#/EditData"
+                  target="_blank"
+                  style="font-size: 20px"
+                  >{{personInfo.phone}}</a
+                ></el-button
+              >
+              <el-button style="border: none; margin-left: 25px"
+                ><a
+                  href="http://localhost:8080/#/EditData"
+                  target="_blank"
+                  style="font-size: 20px"
+                  >{{personInfo.email}}</a
+                ></el-button
+              >
+              <span
+                style="
+                  border: none;
+                  margin-left: 25px;
+                  font-size: 20px;
+                  color: #003c88;
+                "
+                >您的余额：￥{{personInfo.balance}}
+              </span>
+            </el-col>
+          </el-row>
+
+          <el-menu mode="horizontal">
+            <el-menu-item index="1" style="width: 200px; text-align: center"
+              ><router-link
+                to="PersonalData"
+                @click.native="flushCom"
+                >我的收货地址
+              </router-link></el-menu-item
+            >
+            <el-menu-item index="2" style="width: 200px; text-align: center"
+              >待付款</el-menu-item
+            >
+            <el-menu-item index="3" style="width: 200px; text-align: center"
+              >待发货</el-menu-item
+            >
+            <el-menu-item index="4" style="width: 200px; text-align: center"
+              >待收货</el-menu-item
+            >
+            <el-menu-item index="5" style="width: 200px; text-align: center"
+              >待评价</el-menu-item
+            >
+            <el-menu-item index="6" style="width: 200px; text-align: center"
+              >退款</el-menu-item
+            >
+          </el-menu>
+        </el-card>
+
+        <br />
+        <el-card>
+          <span
+            ><img
+              style="width: auto; height: 30px"
+              src="../assets/物流.png"
+              alt
+            /><span slot="title" style="font-size: 25px; text-align: center"
+              >我的物流</span
+            ></span
+          >
+          <el-empty description="空空如也"></el-empty>
+        </el-card>
+        <br />
+
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span>猜你喜欢</span>
+            <el-button style="float: right; padding: 3px 0" type="text"
+              ><i class="el-icon-refresh"></i>换一换</el-button
+            >
+          </div>
+          <el-button v-model="vertical">
+            <img
+              style="width: 250px; height: auto"
+              class="goods1"
+              src="../assets/青菜.jpg"
+              alt
+            /><br />
+            <span>￥1380.00</span><br />
+            <span>优选青菜白菜</span><br />
+          </el-button>
+          <el-button v-model="vertical">
+            <img
+              style="width: 250px; height: auto"
+              src="../assets/青菜.jpg"
+              alt
+            /><br />
+            <span>￥1380.00</span><br />
+            <span>优选青菜白菜</span><br />
+          </el-button>
+          <br />
+          <el-button v-model="vertical">
+            <img
+              style="width: 250px; height: auto"
+              src="../assets/青菜.jpg"
+              alt
+            /><br />
+            <span>￥1380.00</span><br />
+            <span>优选青菜白菜</span><br />
+          </el-button>
+          <el-button v-model="vertical">
+            <img
+              style="width: 250px; height: auto"
+              src="../assets/青菜.jpg"
+              alt
+            /><br />
+            <span>￥1380.00</span><br />
+            <span>优选青菜白菜</span><br />
+          </el-button>
+          <br />
+          <el-button v-model="vertical">
+            <img
+              style="width: 250px; height: auto"
+              src="../assets/青菜.jpg"
+              alt
+            /><br />
+            <span>￥1380.00</span><br />
+            <span>优选青菜白菜</span><br />
+          </el-button>
+          <el-button v-model="vertical">
+            <img
+              style="width: 250px; height: auto"
+              src="../assets/青菜.jpg"
+              alt
+            /><br />
+            <span>￥1380.00</span><br />
+            <span>优选青菜白菜</span><br />
+          </el-button>
+        </el-card>
       </el-main>
     </el-container>
   </el-container>
@@ -147,7 +301,7 @@
 <script>
 export default {
   created(){
-    //this.showMessage();
+    this.showMessage();
   },
   data(){
     return{
@@ -162,7 +316,6 @@ export default {
     }
   },
   methods:{
-    /*
     async showMessage(){
         // 访问数据库
         this.personInfo.username = localStorage.getItem('username');
@@ -171,7 +324,6 @@ export default {
         this.personInfo = res;
         console.log(this.personInfo);
     },
-    */
     shoppingCar(){
         this.$router.push({path:"/ShoppingCart"});  //主页
     },
@@ -214,8 +366,5 @@ a {
 }
 .router-link-active {
   text-decoration: none;
-}
-.el-menu {
-  border-bottom: none;
 }
 </style>

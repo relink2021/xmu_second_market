@@ -4,7 +4,7 @@
     <div class="publish_product_div">
       <div class="product_img_div">
         <img
-          :src="getImgUrl(itemInfo.item_img)"
+          :src="itemInfo.item_img"
           class="product_img"
           style="width: 250px; height: 320px"
         />
@@ -69,10 +69,6 @@ export default {
     this.showItemMessage();
   },
   methods: {
-    // 获取图片url
-    getImgUrl(url) {
-      return require("D:/vue_workspace/secondhandmarket/src/assets/" + url);
-    },
     // 跳转到登录/注册界面
     login() {
       window.sessionStorage.clear(); //清除session

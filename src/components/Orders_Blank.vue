@@ -69,55 +69,7 @@
     </el-aside>
     <!-- 右边主体区域 -->
     <el-main>
-
-    <!-- 面包屑导航区域 -->
-<el-breadcrumb separator-class="el-icon-arrow-right">
-  <el-breadcrumb-item :to="{ path: '/HomePage' }">首页</el-breadcrumb-item>
-  <el-breadcrumb-item>订单管理</el-breadcrumb-item>
-  <el-breadcrumb-item>订单列表</el-breadcrumb-item>
-</el-breadcrumb>
-
-<!-- 卡片视图区区域 -->
-<el-card class="box-card">
-    <!-- 搜索与添加区域 -->
-  <el-row :gutter="20">
-      <el-col :span="9">
-        <el-input v-model="queryInfo.query" placeholder="请输入内容"  clearable @input="getOrderList">
-         <el-button  slot="append" icon="el-icon-search"  @click="getOrderList"></el-button>
-        </el-input>
-      </el-col>
-  </el-row>
-
-  <!-- 订单列表区域 -->
-  <el-table :data="orderList" border stripe>
-      <!-- <el-table-column type="index" label="#"></el-table-column> -->
-      <el-table-column label="卖家" prop="sellername"></el-table-column>
-      <el-table-column label="买家" prop="buyername"></el-table-column>
-      <el-table-column label="物品名称" prop="item_name"></el-table-column>
-      <el-table-column label="成色" prop="fineness"></el-table-column>
-      <el-table-column label="主类型" prop="main_kind"></el-table-column>
-      <el-table-column label="副类型" prop="sub_kind"></el-table-column>
-      <el-table-column label="单价" prop="price"></el-table-column>
-      <el-table-column label="数量" prop="amount"></el-table-column> 
-      <el-table-column label="成交金额" prop="total"></el-table-column>
-      <el-table-column>
-          <template slot-scope="orderList">
-              <el-button type="primary"  size="mini" @click="detail(orderList.row.item_name,orderList.row.sellername,orderList.row.buyername,orderList.row.total)">详情</el-button>
-          </template>
-      </el-table-column>
-  </el-table>
-
-  <!-- 分页区域 -->
-    <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="1"
-      :page-size="10"
-      layout="total, prev, pager, next"
-      :total="total">
-    </el-pagination>
-    
-    </el-card>
+         <router-view></router-view>
     </el-main>
 
 </el-container>  
@@ -263,9 +215,5 @@ font-size: 0;
 .el-table{
     margin-top: 15px;
     font-size: 12px;
-}
-.el-breadcrumb {
-  margin-bottom: 15px;
-  font-size: 17px;
 }
 </style>

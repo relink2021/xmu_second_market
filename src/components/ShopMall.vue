@@ -172,7 +172,7 @@ export default {
     // 跳转到登录/注册界面
     login() {
       window.sessionStorage.clear(); //清除session
-      this.$router.push("/Login");
+      this.$router.push("/LoginI");
     },
     // 跳转到个人中心
     person() {

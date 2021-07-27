@@ -172,24 +172,6 @@
               </template>
             </div>
             <br />
-            <div class="block" style="font-size: 20px">
-              居住地：
-              <el-cascader
-                :options="options"
-                :props="{ checkStrictly: true }"
-                clearable
-              ></el-cascader>
-            </div>
-            <br />
-            <div class="block" style="font-size: 20px">
-              家乡：
-              <el-cascader
-                :options="options"
-                :props="{ checkStrictly: true }"
-                clearable
-              ></el-cascader>
-            </div>
-            <br />
             <div style="font-size: 20px">
               收货地址：<el-input
                 :rows="1"

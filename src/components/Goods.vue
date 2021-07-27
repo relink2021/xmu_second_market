@@ -24,7 +24,7 @@
             @click.native="goodpage(item.item_name)"
           >
             <img
-              :src="getImgUrl(item.item_img)"
+              :src="item.item_img"
               class="image"
               @click="goodpage(item.item_name)"
               style="cursor: pointer; width: 200px; height: 220px"
@@ -32,7 +32,12 @@
             <div style="padding: 18px">
               <span class="name">{{ item.item_name }}<br /></span>
               <span class="price">¥{{ item.price }}</span>
-              <el-button type="text" class="button">&ensp;加入购物车</el-button>
+              <el-button
+                type="text"
+                class="button"
+                @click="addCart(item.item_name)"
+                >&ensp;加入购物车</el-button
+              >
             </div>
           </el-card>
         </el-col>
@@ -59,11 +64,11 @@ import Utils from "../assets/util.js";
 export default {
   created() {
     // 刷新阻止页签切换
-    var status = window.sessionStorage.getItem('filter_index');
-    if(status != null){
-      this.filter_index = window.sessionStorage.getItem('filter_index');
-      switch(status) {
-        case "0": 
+    var status = window.sessionStorage.getItem("filter_index");
+    if (status != null) {
+      this.filter_index = window.sessionStorage.getItem("filter_index");
+      switch (status) {
+        case "0":
           this.filter0();
           break;
         case "1":
@@ -76,8 +81,7 @@ export default {
           this.filter3();
           break;
       }
-    }
-    else{
+    } else {
       this.getItemList();
     }
   },
@@ -97,6 +101,20 @@ export default {
       menuList: [],
       sub_kind: "",
       filter_index: "0",
+      addForm: {
+        sellername: "",
+        buyername: "",
+        item_name: "",
+        fineness: "",
+        main_kind: "",
+        sub_kind: "",
+        price: "",
+        amount: "",
+        total: "",
+        item_img: "",
+        item_detail: "",
+        isbought: "",
+      },
     };
   },
   methods: {
@@ -116,9 +134,34 @@ export default {
       this.total = res.number;
       console.log(this.itemList);
     },
-    // 获取图片url
-    getImgUrl(url) {
-      return require("D:/vue_workspace/secondhandmarket/src/assets/" + url);
+    // 将商品添加至购物车
+    async addCart(item_name) {
+      //循环商品列表，找到要加入购物车的商品
+      this.itemList.forEach((item) => {
+        if (item.item_name == item_name) {
+          //将item的表项对应赋给shopcar的表项
+          this.addForm.sellername = item.username;
+          this.addForm.buyername = localStorage.getItem("username");
+          this.addForm.item_name = item_name;
+          this.addForm.main_kind = item.main_kind;
+          this.addForm.sub_kind = item.sub_kind;
+          this.addForm.fineness = item.fineness;
+          this.addForm.price = item.price;
+          this.addForm.item_img = item.item_img;
+          this.addForm.item_detail = item.comment;
+          this.addForm.amount = 1;
+          this.addForm.total = 0;
+          this.addForm.isbought = false;
+        }
+      });
+      console.log(this.addForm);
+      const { data: res } = await this.$http.post("addCart", this.addForm);
+      console.log(res);
+      if (res == "success") {
+        this.$message.success(this.addForm.item_name + " 已被成功加入购物车");
+      } else {
+        this.$message.error("加入购物车失败");
+      }
     },
     // 跳转到登录/注册界面
     login() {
@@ -127,7 +170,7 @@ export default {
     },
     goodpage(item_name) {
       localStorage.setItem("item_name", item_name);
-      this.$router.push("/GoodPage");
+      this.$router.push("/GoodPagePlus");
     },
     // 单页最大用户数量
     handleSizeChange(newSize) {

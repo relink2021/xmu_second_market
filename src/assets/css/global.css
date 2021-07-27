@@ -23,3 +23,23 @@ HTML,body,#app{
     height: 40px;
     line-height: 40px;
 }
+
+.el-page-header__content {
+    font-size: 16px;
+}
+
+.el-page-header__title {
+    font-size: 16px;
+}
+
+.el-divider__text, .el-link {
+    font-weight: 800;
+    font-size: 16px;
+}
+
+.el-upload-dragger .el-icon-upload {
+    font-size: 67px;
+    color: #C0C4CC;
+    margin: 40px 20px 16px;
+    line-height: 50px;
+}
