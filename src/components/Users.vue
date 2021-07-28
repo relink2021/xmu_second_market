@@ -108,11 +108,16 @@
           <!-- 用户列表区域 -->
           <el-table :data="userList" border stripe>
             <el-table-column label="用户名" prop="username"></el-table-column>
-            <el-table-column label="密码" prop="password"></el-table-column>
+            <!-- <el-table-column label="密码" prop="password"></el-table-column> -->
             <el-table-column label="电话" prop="phone"></el-table-column>
             <el-table-column label="邮箱" prop="email"></el-table-column>
             <el-table-column label="角色" prop="role"></el-table-column>
-            <el-table-column label="余额" prop="balance"></el-table-column>
+            <el-table-column label="状态" prop="state">
+              <!-- 作用域插槽 -->
+              <template slot-scope="scope">
+                <el-switch v-model="scope.row.state" @change="userStateChanged(scope.row)"></el-switch>
+              </template>
+            </el-table-column>
             <el-table-column label="操作" width="180px">
               <template slot-scope="scope">
                 <!-- 修改按钮 -->
@@ -193,9 +198,9 @@
             <el-form-item label="用户名" prop="username">
               <el-input v-model="addForm.username"></el-input>
             </el-form-item>
-            <el-form-item label="密码" prop="password">
+            <!-- <el-form-item label="密码" prop="password">
               <el-input v-model="addForm.password"></el-input>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label="手机" prop="phone">
               <el-input v-model="addForm.phone"></el-input>
             </el-form-item>
@@ -234,9 +239,9 @@
             <el-form-item label="用户名" prop="username">
               <el-input v-model="updateForm.username" disabled></el-input>
             </el-form-item>
-            <el-form-item label="密码" prop="password">
+            <!-- <el-form-item label="密码" prop="password">
               <el-input v-model="updateForm.password"></el-input>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label="手机" prop="phone">
               <el-input v-model="updateForm.phone"></el-input>
             </el-form-item>
@@ -467,6 +472,18 @@ export default {
     toggleCollapse() {
       this.isCollapse = !this.isCollapse;
     },
+    async userStateChanged(userInfo) {
+      console.log(userInfo);
+      const {data:res} = await this.$http.post("updateState",userInfo);
+      console.log(userInfo);
+      if (res == "success") {
+        this.$message.success("修改状态成功"); // 信息提示
+        this.getUserList();
+      } else {
+        this.$message.error("修改状态失败"); // 错误提示
+        userInfo.state = !userInfo.state;
+      }
+    }
   },
 };
 </script>

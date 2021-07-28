@@ -6,19 +6,21 @@
       <!-- 标题图标文字 -->
       <div>
         <img
-          style="width: auto; height: 30px"
+          style="width: auto; height: 40px; margin-top:10px"
           src="../assets/logo-mini.png"
           alt
         />
       </div>
       <span
         style="
-          width: 250px;
+          width: 150px;
           text-align: center;
           display: block;
           color: #fff;
-          font-size: 35px;
+          font-size: 30px;
           font-weight: bold;
+          margin-right: 10px;
+          margin-top:10px;
         "
         >个人中心</span>
       <!-- 页面菜单栏 -->
@@ -26,13 +28,14 @@
         :default-active="activeIndex"
         class="el-menu-demo"
         mode="horizontal"
-        background-color="#003c88"
+        background-color="#333744"
         text-color="#fff"
         active-text-color="#ffd04b"
+        router
       >
         <el-menu-item index="1"
+        @click="back_to_shopmall"
           ><a
-            href="#Goods"
             target="_blank"
             style="font-size: 20px"
             ><span style="font-size: 20px">首页</span></a
@@ -42,60 +45,14 @@
           <template slot="title"
             ><span style="font-size: 20px">账户设置</span></template
           >
-          <el-submenu index="2-1">
-            <template slot="title">安全设置</template>
-            <el-menu-item index="2-1-1"
-              ><router-link
-                to="EditData"
-                style="font-size: 15px; color: #fff"
-                >修改密码
-              </router-link></el-menu-item
-            >
-            <el-menu-item index="2-1-2">
-              <router-link
-                to="EditData"
-                style="font-size: 15px; color: #fff"
-                >手机绑定
-              </router-link></el-menu-item
-            >
-            <el-menu-item index="2-1-3"
-              ><router-link
-                to="EditData"
-                style="font-size: 15px; color: #fff"
-                >邮箱绑定
-              </router-link></el-menu-item
-            >
-          </el-submenu>
-          <el-submenu index="2-2">
-            <template slot="title">个人资料</template>
-            <el-menu-item index="2-2-1"
-              ><router-link
-                to="PersonalData"
-                style="font-size: 15px; color: #fff"
-                >收货地址
-              </router-link></el-menu-item
-            >
-            <el-menu-item index="2-2-2"
-              ><router-link
-                to="PersonalData"
-                style="font-size: 15px; color: #fff"
-                >修改头像、昵称
-              </router-link></el-menu-item
-            >
-          </el-submenu>
-          <el-submenu index="2-3">
-            <template slot="title">账号绑定</template>
-            <el-menu-item index="2-3-1">支付宝绑定</el-menu-item>
-            <el-menu-item index="2-3-2">微博绑定</el-menu-item>
-          </el-submenu>
+          <el-menu-item index="EditData">
+            <span style="font-size: 15px; color: #fff">修改密码</span>
+          </el-menu-item>
+          <el-menu-item index="PersonalData">
+            <span style="font-size: 15px; color: #fff">个人资料</span>
+          </el-menu-item>
         </el-submenu>
       </el-menu>
-      <!-- 搜索栏 -->
-      <div style="margin-top: -5px; margin-left: 400px" align="right">
-        <el-input>
-          <el-button slot="append" icon="el-icon-search"></el-button>
-        </el-input>
-      </div>
     </el-header>
     <!-- 主体 -->
     <el-container>
@@ -106,7 +63,7 @@
         </h5>
         <!-- 侧边栏颜色 -->
         <el-menu
-          background-color="#006e9f"
+          background-color="#333744"
           text-color="#fff"
           active-text-color="#ffd04b"
           :router="true"
@@ -132,11 +89,10 @@
         </el-menu-item-group>
       </el-submenu>
           <el-menu-item index="EditEstablish">
-            <span slot="title" style="font-size: 15px">修改发布商品</span>
+            <span slot="title" style="font-size: 15px">我的发布</span>
           </el-menu-item>
         </el-menu>
       </el-aside>
-      <!-- 主体内容 -->
       <el-main>
         <router-view></router-view>
       </el-main>
@@ -173,10 +129,14 @@ export default {
     },
     */
     shoppingCar(){
-        this.$router.push({path:"/ShoppingCart"});  //主页
+        this.$router.push({path:"/ShoppingCart"});  //购物车
     },
     editEstablish(){
         this.$router.push({path:"/EditEstablish"}); // 修改发布信息
+    },
+    back_to_shopmall()
+    {
+      this.$router.push({path:"/ShopMall"}); // 返回商城界面
     }
   }
 };
@@ -185,18 +145,18 @@ export default {
 <style class='less' scoped>
 /* 根节点样式 */
 .PC-container {
-  background-color: rgb(0, 60, 136);
+  background-color: #333744;
   height: 100%;
 }
 /* 头样式 */
 .el-header {
-  background-color: #003c88;
+  background-color: #333744;
   display: flex;
   font-size: 40px;
 }
 /* 侧边栏样式 */
 .el-aside {
-  background-color: rgb(0, 60, 136);
+  background-color: #333744;
   width: auto;
 }
 /* 主体样式 */

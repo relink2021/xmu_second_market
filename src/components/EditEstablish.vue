@@ -10,25 +10,27 @@
           <el-table-column width="55">
           </el-table-column>
 
-          <el-table-column label="已发布商品详情" width="800" >
+          <el-table-column label="商品图片" width="200">
             <template slot-scope="props">
-              <el-row :gutter="20" class="seller">
-                卖家：{{ props.row.sellername }}
-              </el-row>
-              <el-row type="flex"  justify="center" :gutter="20">
-                 <el-col :span="6" class="details">
-                   <img :src="props.row.item_img" alt />
-                 </el-col>
-                 <el-col :span="6" class="item_name">
-                   {{props.row.item_name}}
-                 </el-col>
-                 <el-col :span="6">
-                   {{ props.row.item_detail }}
-                 </el-col>
-                 <el-col :span="6" class="kind">
-                   {{props.row.main_kind}}-{{props.row.sub_kind}}
-                 </el-col>
-              </el-row>
+              <img :src="props.row.item_img" alt />
+            </template>
+          </el-table-column>
+
+          <el-table-column label="商品名称"  width="200" >
+            <template slot-scope="props" >
+            <span class="item_name"> {{props.row.item_name}} </span>
+            </template>
+          </el-table-column>
+
+          <el-table-column label="商品详情"  width="330" >
+            <template slot-scope="props" >
+            <span style="font-size: 15px;"> {{props.row.item_detail}} </span>
+            </template>
+          </el-table-column>
+
+          <el-table-column label="分类和成色"  width="200" >
+            <template slot-scope="props" >
+            <span class="kind"> {{props.row.fineness}}<br>{{props.row.main_kind}}-{{props.row.sub_kind}} </span>
             </template>
           </el-table-column>
         
@@ -38,9 +40,9 @@
             </template>
           </el-table-column>
 
-          <el-table-column label="数量" width="200">
+          <el-table-column label="数量" width="150">
             <template slot-scope="props">
-            <span class="amount">{{props.row.amount}} </span>
+            <span class="amount" style="font-size: 15px">{{props.row.amount}} </span>
             </template>          
           </el-table-column>
 
@@ -130,6 +132,9 @@ export default {
               sellername:"",
               buyername:"",
               item_name:"",
+              fineness: "",
+              main_kind:"",
+              sub_kind:"",
               price:"",
               amount:"",
           }
@@ -443,6 +448,11 @@ export default {
 .total{
   font-size: 20px;
   color:red;
+}
+
+img{
+  height: 100px;
+  width: 90x;
 }
 
 //页脚

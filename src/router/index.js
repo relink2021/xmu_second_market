@@ -22,7 +22,6 @@ import OrderDetail from '../components/OrderDetail.vue'
 import orderinfo_sold from '../components/orderinfo_sold.vue'
 import HasBought from '../components/HasBought.vue'
 import HasSold from '../components/HasSold.vue'
-import PersonalCenterDefault from '../components/PersonalCenterDefault'
 import Order_Bought from '../components/Order_Bought.vue'
 import Order_Sold from '../components/Order_Sold.vue'
 import GoodPagePlus from '../components/GoodPagePlus.vue'
@@ -67,7 +66,7 @@ const routes = [
   {
     path:"/PersonalCenter",
     component:PersonalCenter,
-    redirect:"/PersonalCenterDefault",
+    redirect:"/ShoppingCart",
     children:[
       {
         path:"/HasBought",
@@ -97,24 +96,16 @@ const routes = [
         path:"/Order_Sold",
         component:Order_Sold
       },
+      {
+        path:"/EditData",
+        component:EditData,
+      },
+      {
+        path:"/PersonalData",
+        component:PersonalData,
+      },
     ],
 
-  },
-  {
-    path:"/PersonalData",
-    component:PersonalData
-  },
-  {
-    path:"/PersonalCenterDefault",
-    component:PersonalCenterDefault
-  },
-  {
-    path:"/PersonalCenter",
-    component:PersonalCenter
-  },
-  {
-    path:"/EditData",
-    component:EditData
   },
   {
     path:"/Users",

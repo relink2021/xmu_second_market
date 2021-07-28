@@ -1,66 +1,63 @@
 <template>
-        <el-card class="box-card">
-          <el-row :gutter="20">
-            <el-col :span="9">
-              <el-input
-                v-model="queryInfo.query"
-                placeholder="请输入内容"
-                @input="getBoughtOrderList"
-                clearable
-              >
-                <el-button
-                  slot="append"
-                  icon="el-icon-search"
-                  @click="getBoughtOrderList"
-                ></el-button>
-              </el-input>
-            </el-col>
-          </el-row>
+  <el-card class="box-card">
+    <el-row :gutter="20">
+      <el-col :span="9">
+        <el-input
+          v-model="queryInfo.query"
+          placeholder="请输入内容"
+          @input="getBoughtOrderList"
+          clearable
+        >
+          <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="getBoughtOrderList"
+          ></el-button>
+        </el-input>
+      </el-col>
+    </el-row>
 
-          <!-- 订单列表区域 -->
-          <el-table :data="orderList" border stripe>
-            <!-- <el-table-column type="index" label="#"></el-table-column> -->
-            <el-table-column label="卖家" prop="sellername"></el-table-column>
-            <el-table-column
-              label="物品名称"
-              prop="item_name"
-            ></el-table-column>
-            <el-table-column label="新度" prop="fineness"></el-table-column>
-            <el-table-column label="主类型" prop="main_kind"></el-table-column>
-            <el-table-column label="副类型" prop="sub_kind"></el-table-column>
-            <el-table-column label="单价" prop="price"></el-table-column>
-            <el-table-column label="数量" prop="amount"></el-table-column>
-            <el-table-column label="成交金额" prop="total"></el-table-column>
-            <el-table-column label="成交日期" prop="date"></el-table-column>
-            <el-table-column>
-              <template slot-scope="orderList">
-                <el-button
-                  type="primary"
-                  size="mini"
-                  @click="
-                    check_detail(
-                      orderList.row.item_name,
-                      orderList.row.sellername,
-                      orderList.row.buyername
-                    )
-                  "
-                  >详情</el-button
-                >
-              </template>
-            </el-table-column>
-          </el-table>
-
-          <!-- 分页区域 -->
-          <el-pagination
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-            :current-page="1"
-            :page-size="10"
-            layout="total, prev, pager, next"
-            :total="total"
+    <!-- 订单列表区域 -->
+    <el-table :data="orderList" border stripe>
+      <!-- <el-table-column type="index" label="#"></el-table-column> -->
+      <el-table-column label="卖家" prop="sellername"></el-table-column>
+      <el-table-column label="物品名称" prop="item_name"></el-table-column>
+      <el-table-column label="新度" prop="fineness"></el-table-column>
+      <el-table-column label="主类型" prop="main_kind"></el-table-column>
+      <el-table-column label="副类型" prop="sub_kind"></el-table-column>
+      <el-table-column label="单价" prop="price"></el-table-column>
+      <el-table-column label="数量" prop="amount"></el-table-column>
+      <el-table-column label="成交金额" prop="total"></el-table-column>
+      <el-table-column label="成交日期" prop="date"></el-table-column>
+      <el-table-column>
+        <template slot-scope="orderList">
+          <el-button
+            type="primary"
+            size="mini"
+            @click="
+              check_detail(
+                orderList.row.item_name,
+                orderList.row.sellername,
+                orderList.row.buyername
+              )
+            "
+            >详情</el-button
           >
-          </el-pagination>
-        </el-card>
+        </template>
+      </el-table-column>
+    </el-table>
+
+    <!-- 分页区域 -->
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="1"
+      :page-size="10"
+      layout="total, prev, pager, next"
+      :total="total"
+    >
+    </el-pagination>
+  </el-card>
 </template>
 
 <script>
@@ -147,13 +144,13 @@ export default {
     editEstablish() {
       this.$router.push({ path: "/EditEstablish" }); // 修改发布信息
     },
-    
-    check_detail(item_name,sellername,buyername) {
-        localStorage.setItem('order_item',item_name);
-        localStorage.setItem('order_sellername', sellername);
-        localStorage.setItem('order_buyername',buyername);
-        //console.log(item_name);
-        this.$router.push("/Order_Bought");
+
+    check_detail(item_name, sellername, buyername) {
+      localStorage.setItem("order_item", item_name);
+      localStorage.setItem("order_sellername", sellername);
+      localStorage.setItem("order_buyername", buyername);
+      //console.log(item_name);
+      this.$router.push("/Order_Bought");
     },
   },
 };
