@@ -35,6 +35,7 @@
             <el-table-column label="单价" prop="price"></el-table-column>
             <el-table-column label="数量" prop="amount"></el-table-column>
             <el-table-column label="成交金额" prop="total"></el-table-column>
+            <el-table-column label="成交日期" prop="date"></el-table-column>
             <el-table-column>
               <template slot-scope="orderList">
                 <el-button
@@ -101,6 +102,7 @@ export default {
           price: "",
           amount: "",
           total: "",
+          date: "",
         },
       ],
       userList: [],

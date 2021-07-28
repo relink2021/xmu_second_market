@@ -17,7 +17,11 @@
     </el-table>
     <el-divider content-position="left">商品信息</el-divider>
     <el-table :data="itemInfo" stripe>
-      <el-table-column label="商品图片" prop="item_img"></el-table-column>
+      <el-table-column label="商品图片">
+        <template slot-scope="scope">
+          <img :src="scope.row.item_img" class="order_img"/> 　　
+        </template>
+      </el-table-column>
       <el-table-column label="商品名" prop="item_name"></el-table-column>
       <el-table-column label="成色" prop="fineness"></el-table-column>
       <el-table-column label="主类型" prop="main_kind"></el-table-column>
@@ -151,5 +155,9 @@ export default {
 }
 .el-page-header{
     margin-bottom: 50px;
+}
+.order_img{
+  width: 50px;
+  height: 50px;
 }
 </style>

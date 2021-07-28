@@ -184,7 +184,7 @@ export default {
       } else {
         this.$message.error("请勾选商品以结算"); // 错误提示
       }
-      // this.addOrder();
+      this.addOrder();
     },
     //商品加入订单
      async addOrder(){
