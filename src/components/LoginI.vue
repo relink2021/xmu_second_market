@@ -132,6 +132,9 @@
 </template>
 <script>
 export default {
+  created() {
+    this.keyupSubmit();
+  },
   data() {
     // 验证再次输入的密码是否正确
     var checkPassWord = (rule, value, callback) => {
@@ -254,6 +257,16 @@ export default {
           this.innerVisible = false;
         }
       });
+    },
+    // 登录绑定回车按钮
+    keyupSubmit() {
+      document.onkeydown = (e) => {
+        let _key = window.event.keyCode;
+        // 按回车，调用登录方法
+        if (_key === 13) {
+          this.login();
+        }
+      };
     },
   },
 };

@@ -80,6 +80,7 @@ export default {
         price: "",
         amount: "",
         total: "",
+        date: "",
       },
       //搜索输入
       input: "",
@@ -102,6 +103,7 @@ export default {
       this.itemInfo.item_name = localStorage.getItem("order_item");
       this.itemInfo.sellername = localStorage.getItem("order_sellername");
       this.itemInfo.buyername = localStorage.getItem("order_buyername");
+      this.itemInfo.date = localStorage.getItem("order_date");
       console.log(this.itemInfo.buyername);
       const { data: res } = await this.$http.post(
         "showOrderMessage",

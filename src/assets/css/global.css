@@ -47,3 +47,7 @@ HTML,body,#app{
 .el-menu {
     border-right: none;
 }
+
+.el-table td, .el-table th {
+    text-align: center;
+}

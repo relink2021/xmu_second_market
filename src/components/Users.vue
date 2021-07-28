@@ -90,7 +90,6 @@
                 placeholder="请输入用户名搜索用户"
                 v-model="queryInfo.query"
                 clearable
-                @input="getUserList"
               >
                 <el-button
                   slot="append"

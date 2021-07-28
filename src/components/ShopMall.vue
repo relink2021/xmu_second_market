@@ -12,10 +12,9 @@
           placeholder="搜索你想要的二手商品"
           v-model="query"
           clearable
-          @input="saveQuery"
         >
           <!-- 搜索按钮 -->
-          <el-button slot="append" icon="el-icon-search"></el-button>
+          <el-button slot="append" icon="el-icon-search" @click="saveQuery"></el-button>
         </el-input>
       </div>
       <!-- 顶栏 -->

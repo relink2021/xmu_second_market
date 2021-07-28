@@ -5,7 +5,6 @@
         <el-input
           v-model="queryInfo.query"
           placeholder="请输入内容"
-          @input="getBoughtOrderList"
           clearable
         >
           <el-button
@@ -19,7 +18,6 @@
 
     <!-- 订单列表区域 -->
     <el-table :data="orderList" border stripe>
-      <!-- <el-table-column type="index" label="#"></el-table-column> -->
       <el-table-column label="卖家" prop="sellername"></el-table-column>
       <el-table-column label="物品名称" prop="item_name"></el-table-column>
       <el-table-column label="新度" prop="fineness"></el-table-column>
@@ -38,7 +36,8 @@
               check_detail(
                 orderList.row.item_name,
                 orderList.row.sellername,
-                orderList.row.buyername
+                orderList.row.buyername,
+                orderList.row.date
               )
             "
             >详情</el-button
@@ -82,6 +81,7 @@ export default {
         query: "",
         pagenum: 1,
         pagesize: 2,
+        buyername:""
       },
       orderList: [
         {
@@ -104,27 +104,19 @@ export default {
   methods: {
     // 获取该用户所有订单
     async getBoughtOrderList() {
-      const { data: res } = await this.$http.get("allOrder", {
-        params: this.queryInfo,
-      });
+      this.queryInfo.buyername = localStorage.getItem("username");
+      const { data: res } = await this.$http.post( "allBoughtOrder",this.queryInfo);
       this.orderList = res.data;
-      console.log(this.orderList);
       this.total = res.number;
-      this.orderList = this.orderList.filter(
-        (order) => order.buyername == localStorage.getItem("username")
-      );
-      console.log(this.orderList);
       this.total = this.orderList.length;
     },
     // 单页最大用户数量
     handleSizeChange(newSize) {
-      //console.log(newSize);
       this.queryInfo.pagesize = newSize;
       this.getBoughtOrderList();
     },
     // pageNum的触发动作
     handleCurrentChange(newPage) {
-      //console.log(newPage);
       this.queryInfo.pageNum = newPage;
       this.getBoughtOrderList();
     },
@@ -145,11 +137,11 @@ export default {
       this.$router.push({ path: "/EditEstablish" }); // 修改发布信息
     },
 
-    check_detail(item_name, sellername, buyername) {
+    check_detail(item_name, sellername, buyername, date) {
       localStorage.setItem("order_item", item_name);
       localStorage.setItem("order_sellername", sellername);
       localStorage.setItem("order_buyername", buyername);
-      //console.log(item_name);
+      localStorage.setItem("order_date", date);
       this.$router.push("/Order_Bought");
     },
   },

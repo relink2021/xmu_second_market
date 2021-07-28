@@ -10,7 +10,7 @@
           <el-table-column width="55">
           </el-table-column>
 
-          <el-table-column label="商品图片" width="200">
+          <el-table-column label="商品图片" width="150">
             <template slot-scope="props">
               <img :src="props.row.item_img" alt />
             </template>
@@ -28,9 +28,9 @@
             </template>
           </el-table-column>
 
-          <el-table-column label="分类和成色"  width="200" >
+          <el-table-column label="分类"  width="200" >
             <template slot-scope="props" >
-            <span class="kind"> {{props.row.fineness}}<br>{{props.row.main_kind}}-{{props.row.sub_kind}} </span>
+            <span class="kind">{{props.row.main_kind}}-{{props.row.sub_kind}} </span>
             </template>
           </el-table-column>
         
@@ -40,13 +40,13 @@
             </template>
           </el-table-column>
 
-          <el-table-column label="数量" width="150">
+          <el-table-column label="数量" width="200">
             <template slot-scope="props">
             <span class="amount" style="font-size: 15px">{{props.row.amount}} </span>
             </template>          
           </el-table-column>
 
-          <el-table-column label="操作" width="100">
+          <el-table-column label="操作" width="170">
             <template slot-scope="props">
                 <el-button @click="editItemDialog(props.row.item_name)" type="text" size="small">修改</el-button>
                 <el-button @click="deleteGoods(props.row.item_name)" type="text" size="small">删除</el-button>
@@ -101,8 +101,8 @@
           <el-form-item label="数量" prop="amount">
             <el-input v-model="editForm.amount"></el-input>
           </el-form-item>
-          <el-form-item label="详情" prop="comment">
-            <el-input v-model="editForm.comment"></el-input>
+          <el-form-item label="详情" prop="item_detail">
+            <el-input v-model="editForm.item_detail"></el-input>
           </el-form-item>
           <el-form-item label="联系方式" prop="contact">
             <el-input v-model="editForm.contact"></el-input>
@@ -122,6 +122,7 @@
 <script>
 export default {
   created() {
+    this.queryInfo.owner = localStorage.getItem('username');
     this.getReleaseList();
   },
   data() {
@@ -137,15 +138,26 @@ export default {
               sub_kind:"",
               price:"",
               amount:"",
+              item_detail: "",
           }
       ],
       queryInfo: {
         query: "",
         pageNum: 1,
         pageSize: 100,
+        owner: "",
+        edit: 2,
       },
       total: 0,
-      editForm: {},
+      editForm: {
+        item_name: "",
+        fineness: "",
+        main_kind: "",
+        sub_kind: "",
+        price: "",
+        amount: "",
+        item_detail: "",
+      },
       editDialogVisible: false,
       values1: [],
       values2: [],
@@ -292,13 +304,7 @@ export default {
         params: this.queryInfo,
       });
       this.releaseList = res.data;
-      console.log(this.releaseList);
       this.total = res.number;
-      this.releaseList = this.releaseList.filter(
-        (item) => item.username == localStorage.getItem('username')
-      );
-      console.log(this.releaseList);
-      this.total = this.releaseList.length;
     },
     // 显示对话框
     async editItemDialog(item_name) {
@@ -484,5 +490,9 @@ footer {
   height: 50px;
   line-height: 50px;
   text-align: center;
+}
+
+.el-pagination {
+  margin-top: 15px;
 }
 </style>>

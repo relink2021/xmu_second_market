@@ -136,6 +136,7 @@ export default {
     },
     back_to_shopmall()
     {
+      window.sessionStorage.setItem('top_index','Goods');
       this.$router.push({path:"/ShopMall"}); // 返回商城界面
     }
   }

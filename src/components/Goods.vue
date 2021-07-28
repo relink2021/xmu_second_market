@@ -65,6 +65,7 @@ export default {
   created() {
     // 刷新阻止页签切换
     var status = window.sessionStorage.getItem("filter_index");
+    this.queryInfo.owner = localStorage.getItem('username');
     if (status != null) {
       this.filter_index = window.sessionStorage.getItem("filter_index");
       switch (status) {
@@ -94,6 +95,8 @@ export default {
         pageNum: 1,
         pageSize: 8,
         filter: 0,
+        owner: "",
+        edit: 1,
       },
       total: 0,
       // 商品列表
@@ -153,7 +156,7 @@ export default {
           this.addForm.fineness = item.fineness;
           this.addForm.price = item.price;
           this.addForm.item_img = item.item_img;
-          this.addForm.item_detail = item.comment;
+          this.addForm.item_detail = item.item_detail;
           this.addForm.amount = 1;
           this.addForm.total = 0;
           this.addForm.isbought = false;

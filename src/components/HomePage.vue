@@ -16,18 +16,13 @@
         text-color="#fff"
         active-text-color="#ffd04b"
         >
-        <el-submenu index="1">
+        <!-- <el-submenu index="1">
         <template slot="title">导航栏</template>
         <el-menu-item index="1-1">了解我们</el-menu-item>
-        </el-submenu>
-        <el-submenu index="2">
-            <template slot="title">我的二手交易</template>
-        <el-menu-item index="2-1">已购买的宝贝</el-menu-item>
-        <el-menu-item index="2-2">我的购物车</el-menu-item>
-        </el-submenu>
+        </el-submenu> -->
         </el-menu>
         <span></span>
-        <el-button type="info" @click="logout">Return</el-button>
+        <el-button type="info" @click="logout">注销</el-button>
     </el-header>
 <el-container>
     <!-- 侧边栏区域 -->
@@ -98,7 +93,7 @@ export default {
     methods:{
         logout(){
             window.sessionStorage.clear()
-            this.$router.push('/Login')
+            this.$router.push('/LoginI')
         },
         // 获取所有菜单
         async getMenuList(){

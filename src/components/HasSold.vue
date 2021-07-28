@@ -9,7 +9,6 @@
               <el-input
                 v-model="queryInfo.query"
                 placeholder="请输入内容"
-                @input="getSoldOrderList"
                 clearable
               >
                 <el-button
@@ -23,7 +22,6 @@
 
           <!-- 订单列表区域 -->
           <el-table :data="orderList" border stripe>
-            <!-- <el-table-column type="index" label="#"></el-table-column> -->
             <el-table-column label="买家" prop="buyername"></el-table-column>
             <el-table-column
               label="物品名称"
@@ -45,7 +43,8 @@
                      check_detail(
                       orderList.row.item_name,
                       orderList.row.sellername,
-                      orderList.row.buyername
+                      orderList.row.buyername,
+                      orderList.row.date
                     )
                   "
                   >详情</el-button
@@ -90,6 +89,7 @@ export default {
         query: "",
         pagenum: 1,
         pagesize: 2,
+        buyername:""
       },
       orderList: [
         {
@@ -112,16 +112,13 @@ export default {
   methods: {
     // 获取该用户所有订单
     async getSoldOrderList() {
-      const { data: res } = await this.$http.get("allOrder", {
-        params: this.queryInfo,
-      });
+      this.queryInfo.buyername = localStorage.getItem("username");
+      const { data: res } = await this.$http.post("allSoldOrder", this.queryInfo);
       this.orderList = res.data;
-      console.log(this.orderList);
       this.total = res.number;
       this.orderList = this.orderList.filter(
         (order) => order.sellername == localStorage.getItem("username")
       );
-      console.log(this.orderList);
       this.total = this.orderList.length;
     },
     // 单页最大用户数量
@@ -152,11 +149,11 @@ export default {
     editEstablish() {
       this.$router.push({ path: "/EditEstablish" }); // 修改发布信息
     },
-    check_detail(item_name,sellername,buyername) {
+    check_detail(item_name,sellername,buyername,date) {
         localStorage.setItem('order_item',item_name);
         localStorage.setItem('order_sellername', sellername);
         localStorage.setItem('order_buyername',buyername);
-        //console.log(item_name);
+        localStorage.setItem("order_date", date);
         this.$router.push("/Order_Sold");
     },
   },
