@@ -32,7 +32,7 @@
       >
         <el-menu-item index="1"
           ><a
-            href="https://www.xmu.edu.cn"
+            href="#Goods"
             target="_blank"
             style="font-size: 20px"
             ><span style="font-size: 20px">首页</span></a

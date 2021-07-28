@@ -96,7 +96,7 @@
               action="http://localhost:9000/file/upload"
               :on-change="saveImgURL"
               :limit="1"
-              accept=".jpeg .png .jpg"
+              accept=".jpg, .jpeg, .png"
               list-type="picture"
             >
               <i class="el-icon-upload"></i>

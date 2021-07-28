@@ -71,6 +71,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   created:function() {
     console.log('进入购物车页面!');
@@ -148,44 +149,42 @@ export default {
   },
   methods: {
     //提交
-    submmit(){
-      this.addOrder();
-      
-      //以下是跳转到支付宝支付界面，最后应该把this.addOrder()放在下面，即支付成功后再进行三个表的增删改操作
-
-      // if (this.num_price != 0) {
-      //   axios
-      //     .post(
-      //       // 设置自己的主机名加端口号
-      //       "http://localhost:9000/Submit?outTradeNo=" +
-      //         Math.random() * 20210726131 +
-      //         // this.payInfo.outTradeNo +
-      //         "&subject=" +
-      //         "笔记本" +
-      //         // this.payInfo.subject +
-      //         "&totalAmount=" +
-      //         this.num_price +
-      //         "&description=" +
-      //         "笔记本"
-      //       // this.payInfo.description
-      //     )
-      //     .then((resp) => {
-      //       console.log(resp);
-      //       // 添加之前先删除一下，如果单页面，页面不刷新，添加进去的内容会一直保留在页面中，二次调用form表单会出错
-      //       const divForm = document.getElementsByTagName("div");
-      //       if (divForm.length) {
-      //         document.body.removeChild(divForm[0]);
-      //       }
-      //       const div = document.createElement("div");
-      //       div.innerHTML = resp.data; // data就是接口返回的form 表单字符串
-      //       document.body.appendChild(div);
-      //       document.forms[0].setAttribute("target", "_blank"); // 新开窗口跳转
-      //       document.forms[0].submit();
-      //     });
+    submmit(){    
+      // 以下是跳转到支付宝支付界面，最后应该把this.addOrder()放在下面，即支付成功后再进行三个表的增删改操作
+      if (this.num_price != 0) {
+        axios
+          .post(
+            // 设置自己的主机名加端口号
+            "http://localhost:9000/Submit?outTradeNo=" +
+              Math.random() * 20210726131 +
+              // this.payInfo.outTradeNo +
+              "&subject=" +
+              "笔记本" +
+              // this.payInfo.subject +
+              "&totalAmount=" +
+              this.num_price +
+              "&description=" +
+              "笔记本"
+            // this.payInfo.description
+          )
+          .then((resp) => {
+            console.log(resp);
+            // 添加之前先删除一下，如果单页面，页面不刷新，添加进去的内容会一直保留在页面中，二次调用form表单会出错
+            const divForm = document.getElementsByTagName("div");
+            if (divForm.length) {
+              document.body.removeChild(divForm[0]);
+            }
+            const div = document.createElement("div");
+            div.innerHTML = resp.data; // data就是接口返回的form 表单字符串
+            document.body.appendChild(div);
+            document.forms[0].setAttribute("target", "_blank"); // 新开窗口跳转
+            document.forms[0].submit();
+          });
         
-      // } else {
-      //   this.$message.error("请勾选商品以结算"); // 错误提示
-      // }
+      } else {
+        this.$message.error("请勾选商品以结算"); // 错误提示
+      }
+      // this.addOrder();
     },
     //商品加入订单
      async addOrder(){

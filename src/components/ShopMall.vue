@@ -193,10 +193,6 @@ export default {
       if (res.flag != 200) return this.$message.error("获取列表失败！！！"); // 访问失败
       this.menuList = res.menus; // 访问成功，数据回填
     },
-    // 获取图片url
-    getImgUrl(url) {
-      return require("D:/vue_workspace/secondhandmarket/src/assets/" + url);
-    },
     // 跳转到登录/注册界面
     login() {
       window.sessionStorage.clear(); //清除session
