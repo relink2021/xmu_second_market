@@ -465,7 +465,7 @@ export default {
     },
     logout() {
       window.sessionStorage.clear();
-      this.$router.push("/Login");
+      this.$router.push("/LoginI");
     },
     // 点击按钮，切换菜单的折叠与展开
     toggleCollapse() {
