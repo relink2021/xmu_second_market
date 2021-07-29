@@ -100,6 +100,7 @@ export default {
     // 显示订单详细信息
     async showOrderMessage() {
       // 访问数据库
+     //....
       this.itemInfo.item_name = localStorage.getItem("order_item");
       this.itemInfo.sellername = localStorage.getItem("order_sellername");
       this.itemInfo.buyername = localStorage.getItem("order_buyername");
