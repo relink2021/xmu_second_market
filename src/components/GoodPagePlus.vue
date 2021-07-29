@@ -36,6 +36,7 @@ export default {
         amount: "",
         contact: "",
         item_detail: "",
+        item_img: "",
       },
       addForm: {
         sellername: "",

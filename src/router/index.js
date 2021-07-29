@@ -104,6 +104,10 @@ const routes = [
         path:"/PersonalData",
         component:PersonalData,
       },
+      {
+        path:"/GoodPage",
+        component:GoodPage,
+      }
     ],
 
   },

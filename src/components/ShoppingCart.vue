@@ -275,7 +275,7 @@ export default {
     // 查看商品详情
     goodpage(item_name) {
       localStorage.setItem("item_name", item_name);
-      this.$router.push("/GoodPagePlus");
+      this.$router.push("/GoodPage");
     },
 
     // 移出购物车

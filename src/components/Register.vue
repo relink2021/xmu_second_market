@@ -176,7 +176,7 @@ export default {
         console.log(res);
         if (res == "success") {
           this.$message.success("注册成功"); // 信息提示
-          this.$router.push({ path: "/Login" }); // 页面路由跳转
+          this.$router.push({ path: "/LoginI" }); // 页面路由跳转
         } else {
           this.$message.error("注册失败"); // 错误提示
         }
@@ -193,7 +193,7 @@ export default {
     },
     // 返回按钮
     rollback() {
-      this.$router.push("/Login");
+      this.$router.push("/LoginI");
     },
   },
 };

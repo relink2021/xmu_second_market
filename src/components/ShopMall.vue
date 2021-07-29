@@ -8,13 +8,13 @@
       </div>
       <!-- 搜索栏 -->
       <div class="search">
-        <el-input
-          placeholder="搜索你想要的二手商品"
-          v-model="query"
-          clearable
-        >
+        <el-input placeholder="搜索你想要的二手商品" v-model="query" clearable>
           <!-- 搜索按钮 -->
-          <el-button slot="append" icon="el-icon-search" @click="saveQuery"></el-button>
+          <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="saveQuery"
+          ></el-button>
         </el-input>
       </div>
       <!-- 顶栏 -->
@@ -41,16 +41,15 @@
       </el-menu>
       <!-- 用户头像 -->
       <div class="user">
-        <i class="el-icon-user-solid" />
+        <el-avatar :src="userInfo.avatar"> </el-avatar>
         <!-- <el-button round type="info" @click="login">登录/注册</el-button> -->
         <!-- 下拉菜单 -->
         <el-dropdown trigger="click">
           <span class="el-dropdown-link">
-            {{ this.username }}<i class="el-icon-arrow-down el-icon--right"></i>
+            {{ this.userInfo.username
+            }}<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item @click.native="person">个人中心</el-dropdown-item>
-            <el-dropdown-item>修改密码</el-dropdown-item>
             <el-dropdown-item @click.native="login">切换账号</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -122,8 +121,6 @@ export default {
   name: "Element",
   data() {
     return {
-      // 用户名
-      username: "",
       // 菜单列表
       menuList: [],
       //搜索输入
@@ -149,41 +146,47 @@ export default {
         },
       ],
       iconList: {
-        "100":"iconfont icon-shumachanpin",
-        "200":"iconfont icon-jiadian",
-        "300":"iconfont icon-clothes",
-        "400":"iconfont icon-yundong",
-        "500":"el-icon-collection",
-        "101":"iconfont icon-shouji",
-        "102":"iconfont icon-xiangji",
-        "103":"iconfont icon-diannao",
-        "201":"iconfont icon-jiadiandianqi",
-        "202":"iconfont icon-yingyinjiaocai",
-        "301":"iconfont icon-nvzhuang",
-        "302":"iconfont icon-nanzhuang",
-        "303":"iconfont icon-nvxie",
-        "304":"iconfont icon-fushi-nanxie",
-        "305":"iconfont icon-xiangbao",
-        "306":"iconfont icon-icon-test",
-        "401":"iconfont icon-jianshenqicai",
-        "402":"iconfont icon-zihangche",
-        "501":"iconfont icon-book1",
-        "502":"iconfont icon-keben",
-      }
+        100: "iconfont icon-shumachanpin",
+        200: "iconfont icon-jiadian",
+        300: "iconfont icon-clothes",
+        400: "iconfont icon-yundong",
+        500: "el-icon-collection",
+        101: "iconfont icon-shouji",
+        102: "iconfont icon-xiangji",
+        103: "iconfont icon-diannao",
+        201: "iconfont icon-jiadiandianqi",
+        202: "iconfont icon-yingyinjiaocai",
+        301: "iconfont icon-nvzhuang",
+        302: "iconfont icon-nanzhuang",
+        303: "iconfont icon-nvxie",
+        304: "iconfont icon-fushi-nanxie",
+        305: "iconfont icon-xiangbao",
+        306: "iconfont icon-icon-test",
+        401: "iconfont icon-jianshenqicai",
+        402: "iconfont icon-zihangche",
+        501: "iconfont icon-book1",
+        502: "iconfont icon-keben",
+      },
+      userInfo: {
+        username: "",
+        avatar: "",
+      },
     };
   },
   // onload 事件
   created() {
     // 顶栏保存刷新前的页签
-    if (window.sessionStorage.getItem('top_index') != null) {
-      this.top_index = window.sessionStorage.getItem('top_index');
+    if (window.sessionStorage.getItem("top_index") != null) {
+      this.top_index = window.sessionStorage.getItem("top_index");
     }
     // 侧边栏保存刷新前的页签
-    if (window.sessionStorage.getItem('aside_index') != null) {
-      this.aside_index = window.sessionStorage.getItem('aside_index');
+    if (window.sessionStorage.getItem("aside_index") != null) {
+      this.aside_index = window.sessionStorage.getItem("aside_index");
     }
     this.getMenuList();
-    this.username = localStorage.getItem("username");
+    this.userInfo.username = localStorage.getItem("username");
+    console.log(this.userInfo.username);
+    this.getUserInfo();
   },
   methods: {
     // 获取侧边栏菜单
@@ -191,6 +194,10 @@ export default {
       const { data: res } = await this.$http.get("Menus");
       if (res.flag != 200) return this.$message.error("获取列表失败！！！"); // 访问失败
       this.menuList = res.menus; // 访问成功，数据回填
+    },
+    async getUserInfo() {
+      const { data: res } = await this.$http.post("oneUser", this.userInfo);
+      this.userInfo.avatar = res[0].avatar;
     },
     // 跳转到登录/注册界面
     login() {
@@ -218,9 +225,9 @@ export default {
     },
     // 清空当前的商品分类
     clearKind() {
-       window.sessionStorage.clear("sub_kind");
-       Utils.$emit("getItemList", "msg");
-       window.sessionStorage.setItem("aside_index", '0');
+      window.sessionStorage.clear("sub_kind");
+      Utils.$emit("getItemList", "msg");
+      window.sessionStorage.setItem("aside_index", "0");
     },
     // 存储查询信息，跨页面进行商品信息的更新
     saveQuery() {
@@ -228,9 +235,9 @@ export default {
       Utils.$emit("getItemList", "msg");
     },
     // 存储顶栏的激活状态
-    save_top_index(cur_index){
-      window.sessionStorage.setItem('top_index',cur_index);
-    }
+    save_top_index(cur_index) {
+      window.sessionStorage.setItem("top_index", cur_index);
+    },
   },
   mounted() {},
 };
@@ -314,7 +321,7 @@ export default {
   }
 }
 
-.iconfont{
+.iconfont {
   margin-right: 7px;
 }
 
