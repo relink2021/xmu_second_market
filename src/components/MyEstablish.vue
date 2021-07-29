@@ -268,8 +268,8 @@ export default {
           label: "运动代步",
           children: [
             {
-              value: "器械",
-              label: "器械",
+              value: "器材",
+              label: "器材",
             },
             {
               value: "代步",
