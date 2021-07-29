@@ -95,9 +95,7 @@ export default {
       this.addForm.total = 0;
       this.addForm.isbought = false;
 
-      console.log(this.addForm);
       const { data: res } = await this.$http.post("addCart", this.addForm);
-      console.log(res);
       if (res == "success") {
         this.$message.success(this.addForm.item_name + " 已被成功加入购物车");
       } else {
@@ -106,7 +104,6 @@ export default {
     },
     // 获取导航菜单方法
     getMenuList() {
-      console.log("getMenuList");
     },
     home() {
       this.$router.push("/ShopMall");

@@ -212,7 +212,6 @@ export default {
           window.sessionStorage.setItem("user", res.user); //存储user对象
           this.$message.success("登录成功"); //信息提示
           localStorage.setItem("username", this.loginForm.username);
-          console.log(res);
           if (res.user.role == "普通用户") {
             this.$router.push({ path: "/ShopMall" }); //主页
           } else {
@@ -233,7 +232,6 @@ export default {
           //window.sessionStorage.setItem("user",res.user);//存储user对象
           this.$message.success("验证成功");
           localStorage.setItem("username", this.PandE.username);
-          console.log(res);
           this.resetPassword = false; //关闭验证对话框
           this.innerVisible = true; //弹出修改密码对话框
         } else {
@@ -248,7 +246,6 @@ export default {
       this.$refs.resetFormRef.validate(async (valid) => {
         if (!valid) return; // 验证失败
         const { data: res } = await this.$http.post("reset", this.resetForm); // 访问后台
-        console.log(res);
         if (res == "success") {
           this.$message.success("修改密码成功"); // 信息提示
           this.innerVisible = false;

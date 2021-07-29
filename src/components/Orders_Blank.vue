@@ -109,36 +109,22 @@ export default {
             async getOrderList() 
             {
                 const { data: res } = await this.$http.get("allOrder", {params: this.queryInfo,});
-                //console.log(res);
                 this.orderList = res.data;
                 this.total = res.number;
-                console.log(this.orderList);
             },
             async getItemList()
             {
                 const { data: res } = await this.$http.get("allItem", {params: this.queryInfo,});
                 this.itemList = res.data;
                 this.total = res.number;
-                console.log(this.itemList);
             },
-            /*
-            // 获取所有菜单
-            async getMenuList(){
-            const {data:res} =await this.$http.get('menus')
-            if(res.meta.status !==200) return this.$message.error(res.meta.msg)
-            this.menulist=res.data
-            console.log(res)
-            },
-            */
             // 单页最大用户数量
             handleSizeChange(newSize){
-                //console.log(newSize);
                 this.queryInfo.pagesize=newSize;
                 this.getOrderList();
             },
              // pageNum的触发动作
             handleCurrentChange(newPage){
-                //console.log(newPage);
                 this.queryInfo.pageNum = newPage;
                 this.getOrderList();
             },
@@ -153,7 +139,6 @@ export default {
         },
 
         detail(item_name,sellername,buyername,total) {
-            //console.log(item_name);
             localStorage.setItem('order_item',item_name);
             localStorage.setItem('order_sellername', sellername);
             localStorage.setItem('order_buyername',buyername);

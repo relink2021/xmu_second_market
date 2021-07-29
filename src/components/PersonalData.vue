@@ -5,7 +5,6 @@
       <el-upload
         action="http://localhost:9000/file/upload"
         :on-change="saveImgURL"
-        :on-success="flush"
         accept=".jpg, .jpeg, .png"
       >
         <span style="font-size: 18px">
@@ -184,10 +183,6 @@ export default {
       this.modifyForm.avatar = file.response;
       this.updateMessage();
     },
-    flush() {
-      location.reload();
-      location.reload();
-    }
   },
 };
 </script>
@@ -224,7 +219,7 @@ a {
     border-radius: 100%;
 }
 
-.el-upload-list__item {
+.el-upload-list {
     display: none;
 }
 </style>

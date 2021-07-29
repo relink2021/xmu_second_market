@@ -8,7 +8,7 @@
       </div>
       <!-- 搜索栏 -->
       <div class="search">
-        <el-input placeholder="搜索你想要的二手商品" v-model="query" clearable>
+        <el-input placeholder="搜索你想要的二手商品" v-model="query" clearable @clear="saveQuery">
           <!-- 搜索按钮 -->
           <el-button
             slot="append"
@@ -42,7 +42,6 @@
       <!-- 用户头像 -->
       <div class="user">
         <el-avatar :src="userInfo.avatar"> </el-avatar>
-        <!-- <el-button round type="info" @click="login">登录/注册</el-button> -->
         <!-- 下拉菜单 -->
         <el-dropdown trigger="click">
           <span class="el-dropdown-link">
@@ -185,7 +184,6 @@ export default {
     }
     this.getMenuList();
     this.userInfo.username = localStorage.getItem("username");
-    console.log(this.userInfo.username);
     this.getUserInfo();
   },
   methods: {

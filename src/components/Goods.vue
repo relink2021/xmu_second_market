@@ -140,7 +140,6 @@ export default {
       });
       this.itemList = res.data;
       this.total = res.number;
-      console.log(this.itemList);
     },
     // 将商品添加至购物车
     async addCart(item_name) {
@@ -162,9 +161,7 @@ export default {
           this.addForm.isbought = false;
         }
       });
-      console.log(this.addForm);
       const { data: res } = await this.$http.post("addCart", this.addForm);
-      console.log(res);
       if (res == "success") {
         this.$message.success(this.addForm.item_name + " 已被成功加入购物车");
       } else {

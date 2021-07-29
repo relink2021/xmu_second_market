@@ -104,7 +104,6 @@ export default {
       this.itemInfo.sellername = localStorage.getItem("order_sellername");
       this.itemInfo.buyername = localStorage.getItem("order_buyername");
       this.itemInfo.date = localStorage.getItem("order_date");
-      console.log(this.itemInfo.buyername);
       const { data: res } = await this.$http.post(
         "showOrderMessage",
         this.itemInfo
@@ -121,7 +120,6 @@ export default {
     async showSellerMessage() {
       // 访问数据库
       this.sellerinfo.username = localStorage.getItem("order_sellername");
-      console.log(this.sellerinfo.username);
       const { data: res } = await this.$http.post("oneUser", this.sellerinfo);
       // 填充数据
       this.sellerinfo = res;
@@ -131,7 +129,6 @@ export default {
     async showBuyerMessage() {
       // 访问数据库
       this.buyerinfo.username = localStorage.getItem("order_buyername");
-      console.log(this.buyerinfo.username);
       const { data: res } = await this.$http.post("oneUser", this.buyerinfo);
       // 填充数据
       this.buyerinfo = res;
@@ -141,7 +138,6 @@ export default {
     },
     // 获取导航菜单方法
     getMenuList() {
-      console.log("getMenuList");
     },
     goBack() {
       this.$router.push("/HasBought");

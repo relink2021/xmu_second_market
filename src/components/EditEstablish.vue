@@ -308,7 +308,6 @@ export default {
     },
     // 显示对话框
     async editItemDialog(item_name) {
-      console.log('1');
       const { data: res } = await this.$http.get(
         "getEdit?item_name=" + item_name
       );
@@ -317,7 +316,6 @@ export default {
       this.values2[0] = this.editForm.main_kind;
       this.values2[1] = this.editForm.sub_kind;
       this.editDialogVisible = true; // 打开对话框
-      console.log(this.editDialogVisible);
     },
     handleChange1(){    
         this.editForm.fineness = this.values1[0];
@@ -389,45 +387,6 @@ export default {
   height: 200%;
   width: 100%;
 }
-
-//头部样式
-.el-header {
-  z-index: 1;
-  background-color: #2f3235;
-  justify-content: space-between; //左右贴边
-  padding-left: 0%; //左边界
-  color: #fff;
-  font-size: 30px;
-  display: flex;
-  > div {
-    display: flex;
-    align-items: center;
-    span {
-      margin-left: 15px;
-      font-weight: bold;
-    }
-  }
-
-  .search {
-    width: 20%;
-    height: 60%;
-    position: relative;
-    top: 20%;
-    right: 10%;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    background-color: rgb(255, 255, 255);
-    background-image: url("https://static.runoob.com/images/mix/searchicon.png");
-    background-position: 10px 10px;
-    background-repeat: no-repeat;
-    padding: 12px 20px 12px 40px;
-    -webkit-transition: width 0.4s ease-in-out;
-    transition: width 0.4s ease-in-out;
-  }
-}
-
 
 //商品信息样式
 .seller{

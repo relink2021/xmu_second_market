@@ -118,16 +118,6 @@ export default {
     }
   },
   methods:{
-    /*
-    async showMessage(){
-        // 访问数据库
-        this.personInfo.username = localStorage.getItem('username');
-        const {data:res} = await this.$http.post("showMessage",this.personInfo);
-        // 填充数据
-        this.personInfo = res;
-        console.log(this.personInfo);
-    },
-    */
     shoppingCar(){
         this.$router.push({path:"/ShoppingCart"});  //购物车
     },

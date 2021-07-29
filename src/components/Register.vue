@@ -173,7 +173,6 @@ export default {
           "register",
           this.registerForm
         ); // 访问后台
-        console.log(res);
         if (res == "success") {
           this.$message.success("注册成功"); // 信息提示
           this.$router.push({ path: "/LoginI" }); // 页面路由跳转
@@ -184,7 +183,6 @@ export default {
     },
     async checkUser(){
         const {data:res} = await this.$http.post("checkUser",this.registerForm);
-        console.log(res);
         if(res == "ok"){
             this.userFlag = true;
         } else {

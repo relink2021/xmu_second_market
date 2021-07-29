@@ -107,8 +107,8 @@
             </el-upload>
           </el-tab-pane>
           <el-tab-pane label="商品详情" name="3">
-            <el-form-item label="详情" prop="comment" size="small">
-              <el-input v-model="releaseForm.comment"></el-input>
+            <el-form-item label="详情" prop="item_detail" size="small">
+              <el-input v-model="releaseForm.item_detail"></el-input>
             </el-form-item>
             <el-form-item label="联系方式" prop="contact" size="small">
               <el-input v-model="releaseForm.contact"></el-input>
@@ -138,7 +138,7 @@ export default {
         sub_kind: "",
         price: "",
         amount: "",
-        comment: "",
+        item_detail: "",
         contact: "",
         item_img: "",
       },
@@ -316,7 +316,6 @@ export default {
           "releaseItem",
           this.releaseForm
         ); // 访问后台
-        console.log(res);
         if (res == "success") {
           this.$message.success("发布商品成功"); // 信息提示
           this.$router.push("/ShopMall");
@@ -326,7 +325,6 @@ export default {
       });
     },
     saveImgURL(file) {
-      console.log(file.response);
       this.releaseForm.item_img = file.response;
       this.imgFlag = true;
     },

@@ -97,10 +97,9 @@
 import axios from "axios";
 export default {
   created: function () {
-    console.log("进入购物车页面!");
-    console.log("当前登录用户为：" + localStorage.getItem("username"));
     this.getShopCarList();
     this.ItemTotal();
+    this.Totalprice();
   },
   data() {
     return {
@@ -131,7 +130,7 @@ export default {
       num: 1,
       //总记录数
       total_amount: 0,
-      num_price: 0,
+      num_price: "0.00",
       //被勾选出的物品
       itemSelected: [
         {
@@ -173,8 +172,27 @@ export default {
   methods: {
     //提交
     submmit() {
-      // 以下是跳转到支付宝支付界面，最后应该把this.addOrder()放在下面，即支付成功后再进行三个表的增删改操作
-      if (this.num_price != 0) {
+      this.addOrder();
+    },
+    //商品加入订单
+    async addOrder() {
+      this.orderList = this.itemSelected;
+      //如果没有勾选
+      if (this.num_price==0)
+      {
+        this.$message.error("请勾选商品以结算"); // 错误提示
+      }
+      else
+      {
+        //判断库存数量是否足够
+          const { data: res1 } = await this.$http.post("deleteItem",this.orderList);
+        //如果库存不够
+        if (res1 == "error") this.$message.error("库存不足！");//不跳转
+        else 
+        // 以下是跳转到支付宝支付界面，最后应该把this.addOrder()放在下面，即支付成功后再进行三个表的增删改操作
+        {
+        const { data: res } = await this.$http.post("addOrder", this.orderList);
+        this.$message.success("结算成功！");
         axios
           .post(
             // 设置自己的主机名加端口号
@@ -191,7 +209,6 @@ export default {
             // this.payInfo.description
           )
           .then((resp) => {
-            console.log(resp);
             // 添加之前先删除一下，如果单页面，页面不刷新，添加进去的内容会一直保留在页面中，二次调用form表单会出错
             const divForm = document.getElementsByTagName("div");
             if (divForm.length) {
@@ -203,25 +220,10 @@ export default {
             document.forms[0].setAttribute("target", "_blank"); // 新开窗口跳转
             document.forms[0].submit();
           });
-      } else {
-        this.$message.error("请勾选商品以结算"); // 错误提示
-      }
-      this.addOrder();
-    },
-    //商品加入订单
-    async addOrder() {
-      this.orderList = this.itemSelected;
-
-      const { data: res1 } = await this.$http.post(
-        "deleteItem",
-        this.orderList
-      );
-      if (res1 == "error") this.$message.error("库存不足！");
-      else {
-        const { data: res } = await this.$http.post("addOrder", this.orderList);
-        this.$message.success("结算成功！");
+        } 
       }
     },
+    
     //所有物品金额合计
     Totalprice() {
       let price = 0;
@@ -234,7 +236,6 @@ export default {
     ItemTotal() {
       this.shopCar.forEach((item) => {
         let total_price = item.price * item.amount;
-        console.log(total_price);
         item.total = total_price.toFixed(2);
       });
     },
@@ -243,10 +244,6 @@ export default {
     async getShopCarList() {
       //以下三行代码，变量命名均无意义不用管
       this.checkInfo.item_name = localStorage.getItem("username");
-      console.log(
-        "获取物品信息的测试：checkinfo.item_name的值为：" +
-          this.checkInfo.item_name
-      );
       const { data: res } = await this.$http.post("allShopCar", this.checkInfo);
       this.shopCar = res.data;
       this.total_amount = res.numbers; //注意这里有个s！
@@ -255,8 +252,6 @@ export default {
 
     //选中多选框触发事件
     handleSelectionChange(val) {
-      console.log("val=");
-      console.log(val);
       this.itemSelected = val;
       //计算被选中的物品总金额
       this.Totalprice();
@@ -266,7 +261,6 @@ export default {
     handleChange(value) {
       //计算被选中的物品总金额
       this.Totalprice();
-      console.log(value);
       //计算某项商品的total值
       this.ItemTotal();
     },

@@ -208,10 +208,8 @@ export default {
     // 获取导航菜单方法
     async getMenuList() {
       const { data: res } = await this.$http.get("Menus");
-      console.log(res);
       if (res.flag != 200) return this.$message.error("获取列表失败！！！"); // 访问失败
       this.menuList = res.menus; // 访问成功，数据回填
-      console.log(this.menuList);
     },
     // 跳转到个人中心
     person() {
@@ -231,7 +229,6 @@ export default {
     imgLoad() {
       this.$nextTick(() => {
         this.bannerHeight = this.$refs.bannerHeight[0].bannerHeight;
-        console.log(this.$refs.bannerHeight[0], height);
       });
     },
     // 保存路径

@@ -6,6 +6,7 @@
           v-model="queryInfo.query"
           placeholder="请输入内容"
           clearable
+          @clear="getBoughtOrderList"
         >
           <el-button
             slot="append"

@@ -80,7 +80,6 @@ export default {
         const { data: res } = await this.$http.post(
           "reset",this.resetForm
         ); // 访问后台
-        console.log(res);
         if (res == "success") {
           this.$message.success("修改密码成功"); // 信息提示
         } else {

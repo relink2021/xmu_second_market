@@ -10,6 +10,7 @@
                 v-model="queryInfo.query"
                 placeholder="请输入内容"
                 clearable
+                @clear="getSoldOrderList"
               >
                 <el-button
                   slot="append"
@@ -123,13 +124,11 @@ export default {
     },
     // 单页最大用户数量
     handleSizeChange(newSize) {
-      //console.log(newSize);
       this.queryInfo.pagesize = newSize;
       this.getBoughtOrderList();
     },
     // pageNum的触发动作
     handleCurrentChange(newPage) {
-      //console.log(newPage);
       this.queryInfo.pageNum = newPage;
       this.getBoughtOrderList();
     },

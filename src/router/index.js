@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from '../components/Login.vue'
 import Register from '../components/Register.vue'
 import HomePage from '../components/HomePage.vue'
 import ShoppingCart from '../components/ShoppingCart.vue'
@@ -10,16 +9,13 @@ import PersonalCenter from '../components/PersonalCenter.vue'
 import PersonalData from '../components/PersonalData.vue'
 import EditData from '../components/EditData.vue'
 import Users from '../components/Users.vue'
-import Establish from '../components/Establish.vue'
 import EditEstablish from '../components/EditEstablish.vue'
 import GoodPage from '../components/GoodPage.vue'
 import MyEstablish from '../components/MyEstablish.vue'
 import Goods from '../components/Goods.vue'
-import Test from '../components/Test.vue'
 import Orders_Blank from '../components/Orders_Blank.vue'
 import Orders from '../components/Orders.vue'
 import OrderDetail from '../components/OrderDetail.vue'
-import orderinfo_sold from '../components/orderinfo_sold.vue'
 import HasBought from '../components/HasBought.vue'
 import HasSold from '../components/HasSold.vue'
 import Order_Bought from '../components/Order_Bought.vue'
@@ -32,10 +28,6 @@ const routes = [
   {
     path:"/",
     redirect:"/LoginI"
-  },
-  {
-    path:"/Login",
-    component:Login
   },
   { 
     path:"/LoginI",
@@ -85,10 +77,6 @@ const routes = [
         component:EditEstablish,
       },
       {
-        path:"/orderinfo_sold",
-        component:orderinfo_sold
-      },
-      {
         path:"/Order_Bought",
         component:Order_Bought
       },
@@ -109,19 +97,10 @@ const routes = [
         component:GoodPage,
       }
     ],
-
   },
   {
     path:"/Users",
     component:Users
-  },
-  {
-    path:"/Establish",
-    component:Establish
-  },
-  {
-    path:"/Test",
-    component:Test,
   },
   {
     path:"/Orders_Blank",

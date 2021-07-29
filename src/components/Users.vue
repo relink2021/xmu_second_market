@@ -90,6 +90,7 @@
                 placeholder="请输入用户名搜索用户"
                 v-model="queryInfo.query"
                 clearable
+                @clear="getUserList"
               >
                 <el-button
                   slot="append"
@@ -377,10 +378,8 @@ export default {
       const { data: res } = await this.$http.get("allUser", {
         params: this.queryInfo,
       });
-      console.log(res);
       this.userList = res.data;
       this.total = res.number;
-      console.log(this.userList);
     },
     // 新增用户
     addUser() {
@@ -388,7 +387,6 @@ export default {
       this.$refs.addFormRef.validate(async (valid) => {
         if (!valid) return; // 验证失败
         const { data: res } = await this.$http.post("addUser", this.addForm); // 访问后台
-        console.log(res);
         if (res == "success") {
           this.$message.success("新建用户成功"); // 信息提示
           this.addDialogVisible = false;
@@ -400,7 +398,6 @@ export default {
     },
     async checkUser() {
       const { data: res } = await this.$http.post("checkUser", this.addForm);
-      console.log(res);
       if (res == "ok") {
         this.userFlag = true;
       } else {
@@ -472,9 +469,7 @@ export default {
       this.isCollapse = !this.isCollapse;
     },
     async userStateChanged(userInfo) {
-      console.log(userInfo);
       const {data:res} = await this.$http.post("updateState",userInfo);
-      console.log(userInfo);
       if (res == "success") {
         this.$message.success("修改状态成功"); // 信息提示
         this.getUserList();
