@@ -35,11 +35,12 @@
         </el-header>
         <el-container class="bottom">
             <!-- 侧边栏 -->
+            
             <el-aside class="aside" width="200px">
                 <el-card>
                     <!-- 好友列表 -->
                     <!-- @node-click="handleNodeClick" -->
-                    <el-tree node-key="label" class="friend_tree" :data="friend" :props="defaultProps" @node-click="clickNode">
+                    <el-tree node-key="label" class="friend_tree" :data="friend" @node-click="clickNode">
                     </el-tree>
                 </el-card>
             </el-aside>
@@ -65,7 +66,7 @@ export default {
             friend: [{
                 label: '好友',
                 children: [
-                    { label: '张三', },
+                    { label: 'relink2', },
                     { label: '李四', },
                     { label: '王五', },
                 ],
@@ -87,6 +88,7 @@ export default {
         async getUserInfo() {
             const { data: res } = await this.$http.post("oneUser", this.userInfo);
             this.userInfo.avatar = res[0].avatar;
+            localStorage.setItem("avatar" + this.userInfo.username, res[0].avatar)
         },
         // 切换账号，跳转到登录页面
         login() {
@@ -104,6 +106,7 @@ export default {
             } else {
                 localStorage.setItem("chat_with", node.label);
                 this.$router.push("/ChatRoom")
+                location.reload();
             }
         },
     }
