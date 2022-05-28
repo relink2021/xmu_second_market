@@ -7,6 +7,7 @@ import './assets/font/iconfont.css'
 import './assets/font2/iconfont.css'
 import './assets/font3/iconfont.css'
 import axios from 'axios'
+import './common/font/font.css'
 
 Vue.prototype.$http = axios
 axios.defaults.baseURL = "http://localhost:9000"

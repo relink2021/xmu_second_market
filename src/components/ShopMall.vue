@@ -105,10 +105,6 @@
         <el-main>
           <router-view></router-view>
         </el-main>
-        <!-- 页脚 -->
-        <!-- <el-footer>
-          <p>Copyright © 2021.Company name All rights reserved.</p>
-        </el-footer> -->
       </el-container>
     </el-container>
   </el-container>

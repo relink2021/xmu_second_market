@@ -5,6 +5,16 @@
   </div>
 </template>
 
+<script>
+import Sock from './components/Sock.vue'
+export default {
+  name: 'App',
+  components: {
+    Sock
+  }
+}
+</script>
+
 <style lang="less">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

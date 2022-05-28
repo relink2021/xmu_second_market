@@ -22,101 +22,118 @@ import Order_Bought from '../components/Order_Bought.vue'
 import Order_Sold from '../components/Order_Sold.vue'
 import GoodPagePlus from '../components/GoodPagePlus.vue'
 import LoginI from '../components/LoginI.vue'
+import Head from '../components/Head.vue'
+import ChatRoom from '../components/ChatRoom.vue'
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path:"/",
-    redirect:"/LoginI"
-  },
-  { 
-    path:"/LoginI",
-    component:LoginI
+    path: "/",
+    redirect: "/LoginI"
   },
   {
-    path:"/HomePage",
-    component:HomePage
+    path: "/LoginI",
+    component: LoginI
   },
   {
-    path:"/Register",
-    component:Register
+    path: "/HomePage",
+    component: HomePage
   },
   {
-    path:"/Home",
-    component:Home
+    path: "/Register",
+    component: Register
   },
   {
-    path:"/ShopMall",
+    path: "/Home",
+    component: Home
+  },
+  {
+    path: "/ShopMall",
     component: ShopMall,
     redirect: "/Goods",
-    children:[
-      { path:"/MyEstablish", component: MyEstablish,},
-      { path:"/Goods", component: Goods,},
-      { path:"/GoodPagePlus", component: GoodPagePlus,}
+    children: [
+      { path: "/MyEstablish", component: MyEstablish, },
+      { path: "/Goods", component: Goods, },
+      { path: "/GoodPagePlus", component: GoodPagePlus, }
     ]
   },
   {
-    path:"/PersonalCenter",
-    component:PersonalCenter,
-    redirect:"/ShoppingCart",
-    children:[
+    path: "/PersonalCenter",
+    component: PersonalCenter,
+    redirect: "/ShoppingCart",
+    children: [
       {
-        path:"/HasBought",
-        component:HasBought,
+        path: "/HasBought",
+        component: HasBought,
       },
       {
-        path:"/HasSold",
-        component:HasSold,
+        path: "/HasSold",
+        component: HasSold,
       },
       {
-        path:"/ShoppingCart",
-        component:ShoppingCart,
+        path: "/ShoppingCart",
+        component: ShoppingCart,
       },
       {
-        path:"/EditEstablish",
-        component:EditEstablish,
+        path: "/EditEstablish",
+        component: EditEstablish,
       },
       {
-        path:"/Order_Bought",
-        component:Order_Bought
+        path: "/Order_Bought",
+        component: Order_Bought
       },
       {
-        path:"/Order_Sold",
-        component:Order_Sold
+        path: "/Order_Sold",
+        component: Order_Sold
       },
       {
-        path:"/EditData",
-        component:EditData,
+        path: "/EditData",
+        component: EditData,
       },
+      // {
+      //   path:"/PersonalData",
+      //   component:PersonalData,
+      // },
       {
-        path:"/PersonalData",
-        component:PersonalData,
-      },
-      {
-        path:"/GoodPage",
-        component:GoodPage,
+        path: "/GoodPage",
+        component: GoodPage,
       }
     ],
   },
   {
-    path:"/Users",
-    component:Users
+    path: "/Users",
+    component: Users
   },
   {
-    path:"/Orders_Blank",
-    component:Orders_Blank,
-    redirect:"/Orders",
-    children:[
+    path: "/Orders_Blank",
+    component: Orders_Blank,
+    redirect: "/Orders",
+    children: [
       {
-        path:"/OrderDetail",
-        component:OrderDetail,
+        path: "/OrderDetail",
+        component: OrderDetail,
       },
     ]
   },
   {
-    path:"/Orders",
-    component:Orders
+    path: "/Orders",
+    component: Orders
   },
+  {
+    path: "/Head",
+    component: Head,
+    redirect: "/ChatRoom",
+    children: [
+      {
+        path: "/PersonalData",
+        component: PersonalData,
+      },
+      {
+        path: "/ChatRoom",
+        component: ChatRoom,
+      }
+    ]
+  }
 ]
 
 const router = new VueRouter({
