@@ -72,6 +72,8 @@ export default {
         // 本人
         this.me = localStorage.getItem("username")
         this.userInfo.username = localStorage.getItem("username")
+        // 加载聊天记录
+        this.loadMessage()
         // 获取用户信息
         // this.getUserInfo();
         // 监听ActiveMQ
@@ -83,6 +85,7 @@ export default {
             const { data: res } = await this.$http.post("oneUser", this.userInfo);
             this.userInfo.avatar = res[0].avatar;
         },
+        // 发送信息到ActiveMQ
         async sendMessage() {
             this.messageBody.sender = localStorage.getItem('username');
             this.messageBody.receiver = localStorage.getItem('chat_with');
@@ -90,19 +93,34 @@ export default {
             const { data: res } = await this.$http.post("sendMessage", this.messageBody);
             this.textarea = "";
         },
+        // 将消息更新到聊天界面
         async updateMessage(res) {
+            if(res.receiver != this.me && res.sender != this.me && res.receiver != "公共聊天室") {
+                return;
+            }
             this.userInfo.username = res.sender;
-            console.log(res.sender)
-            console.log(this.userInfo.username)
             await this.getUserInfo();
-            console.log(this.userInfo.username)
-            console.log(this.userInfo.avatar)
             var newMessage = {
                 sender: this.userInfo.username,
                 avatar: this.userInfo.avatar,
                 message: res.message,
             }
             if(res.message != "\n") {
+                this.messageDetail.push(newMessage)
+            }
+        },
+        // 加载聊天记录到聊天页面
+        async loadMessage() {
+            const { data: res } = await this.$http.post("loadMessage?self=" + this.me + "&chatter=" + this.who);
+            console.log(res.msgList);
+            for(var i in res.msgList) {
+                this.userInfo.username = res.msgList[i].sender;
+                const { data: res_ } = await this.$http.post("oneUser", this.userInfo);
+                var newMessage = {
+                    sender: res.msgList[i].sender,
+                    avatar: res_[0].avatar,
+                    message: res.msgList[i].message,
+                }
                 this.messageDetail.push(newMessage)
             }
         },

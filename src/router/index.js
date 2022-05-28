@@ -24,6 +24,7 @@ import GoodPagePlus from '../components/GoodPagePlus.vue'
 import LoginI from '../components/LoginI.vue'
 import Head from '../components/Head.vue'
 import ChatRoom from '../components/ChatRoom.vue'
+import FriendAccess from '../components/FriendAccess.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -131,7 +132,11 @@ const routes = [
       {
         path: "/ChatRoom",
         component: ChatRoom,
-      }
+      },
+      {
+        path: "/FriendAccess",
+        component: FriendAccess,
+      },
     ]
   }
 ]

@@ -17,6 +17,8 @@
             <div class="title">
                 <span>TestChat</span>
             </div>
+            <!-- 查看是否有新的好友验证 -->
+            <el-button class="new_friend" @click="manage"> New Friend </el-button>
             <!-- 用户菜单 -->
             <div class="user">
                 <!-- 用户头像 -->
@@ -35,7 +37,6 @@
         </el-header>
         <el-container class="bottom">
             <!-- 侧边栏 -->
-            
             <el-aside class="aside" width="200px">
                 <el-card>
                     <!-- 好友列表 -->
@@ -66,15 +67,12 @@ export default {
             friend: [{
                 label: '好友',
                 children: [
-                    { label: 'relink2', },
-                    { label: '李四', },
-                    { label: '王五', },
                 ],
             },
             {
                 label: '群组',
                 children: [{
-                    label: '大创课群',
+                    label: '公共聊天室',
                 }]
             }]
         }
@@ -82,6 +80,7 @@ export default {
     created() {
         this.userInfo.username = localStorage.getItem("username")
         this.getUserInfo();
+        this.getAllRelation();
     },
     methods: {
         // 获取用户头像
@@ -89,6 +88,15 @@ export default {
             const { data: res } = await this.$http.post("oneUser", this.userInfo);
             this.userInfo.avatar = res[0].avatar;
             localStorage.setItem("avatar" + this.userInfo.username, res[0].avatar)
+        },
+        async getAllRelation() {
+            const { data: res } = await this.$http.post("getRelation?username=" + this.userInfo.username)
+            for (var i in res.friends) {
+                var newLabel = {
+                    label: res.friends[i]
+                };
+                this.friend[0].children.push(newLabel);
+            }
         },
         // 切换账号，跳转到登录页面
         login() {
@@ -99,9 +107,13 @@ export default {
         setting() {
             this.$router.push("/PersonalData");
         },
+        // 跳转到好友管理
+        manage() {
+            this.$router.push("/FriendAccess");
+        },
         // 跳转到聊天室
         clickNode(data, node, obj) {
-            if(node.label === "好友" || node.label === "群组") {
+            if (node.label === "好友" || node.label === "群组") {
                 return;
             } else {
                 localStorage.setItem("chat_with", node.label);
@@ -124,10 +136,24 @@ export default {
     display: flex;
 
     .title {
+        position: relative;
+        left: 160px;
         font-weight: bold;
         font-family: 'Genshin';
         padding-top: 12px;
         padding-right: 550px;
+    }
+
+    .new_friend {
+        position: relative;
+        border-color: #000;
+        right: 200px;
+        font-weight: bold;
+        background-color: #000;
+        color: #fff;
+        font-family: 'Genshin';
+        font-size: 20px;
+        padding-top: 12px;
     }
 
     img {
