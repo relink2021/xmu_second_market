@@ -10,7 +10,7 @@
                 <!-- 搜索框 -->
                 <el-input placeholder="Search Friend ..." v-model="query">
                     <!-- 搜索栏 -->
-                    <el-button slot="append" icon="el-icon-search"></el-button>
+                    <el-button slot="append" icon="el-icon-search" @click="searchFriend(query)"></el-button>
                 </el-input>
             </div>
             <!-- 标题 -->
@@ -52,6 +52,18 @@
             </el-container>
         </el-container>
         <!-- 内容主题，由打开的页面决定 -->
+        <el-dialog :visible.sync="innerVisible" width="500px">
+            <el-avatar :src="userInfo.avatar" class="dialog_avatar"></el-avatar>
+            <span class="dialog_name">{{ this.query }}</span>
+            <br />
+            <div v-if="already == 0">
+                <el-input type="textarea" placeholder="请输入验证消息" v-model="accessMessage" class="dialog_access"></el-input>
+                <el-button class="dialog_button" @click="sendAccess">发送验证消息</el-button>
+            </div>
+            <div v-if="already == 1">
+                <el-button class="dialog_button" disabled>等待对方同意</el-button>
+            </div>
+        </el-dialog>
     </el-container>
 </template>
 
@@ -60,6 +72,9 @@ export default {
     data() {
         return {
             query: "",
+            innerVisible: false,
+            accessMessage: "",
+            already: 0,
             userInfo: {
                 username: "",
                 avatar: "",
@@ -120,6 +135,55 @@ export default {
                 this.$router.push("/ChatRoom")
                 location.reload();
             }
+        },
+        // 搜索好友
+        async searchFriend(query) {
+            // 搜索自己，跳转到设置页面
+            if (query == localStorage.getItem("username")) {
+                this.$router.push("/PersonalData");
+                this.query = ""
+                return;
+            }
+            this.userInfo.username = query;
+            const { data: res } = await this.$http.post("oneUser", this.userInfo);
+            // 搜不存在的用户，提示用户不存在
+            if (res[0] == null) {
+                this.$message.warning("该用户不存在");
+                this.query = ""
+                return
+            }
+            // 搜到的用户已经是好友，跳转到聊天页面
+            const { data: res1 } = await this.$http.post("getRelation?username=" + localStorage.getItem("username"));
+            console.log(res1);
+            for (var i in res1.friends) {
+                var friend = res1.friends[i];
+                console.log(friend)
+                if (this.query == friend) {
+                    this.$router.push("/ChatRoom")
+                    localStorage.setItem("chat_with", this.query)
+                    this.query = ""
+                    location.reload();
+                    return;
+                }
+            }
+            // 搜索的用户不是好友
+            this.innerVisible = true;
+            this.already = 0;
+            const { data: res2 } = await this.$http.post("getAllAccess?username=" + this.query);
+            for (var i in res2.accessInfo) {
+                // 已经发送过验证，对方还未回应
+                if (localStorage.getItem("username") == res2.accessInfo[i].sender && res2.accessInfo[i].access == 0) {
+                    this.already = 1;
+                }
+            }
+        },
+        // 发送好友验证
+        async sendAccess() {
+            const { data: res } = await this.$http.post("addAccess?self=" 
+                + localStorage.getItem("username") + "&other=" + this.query + "&message=" + this.accessMessage);
+            console.log(res);
+            this.innerVisible = false;
+            this.query = ""
         },
     }
 }
@@ -220,5 +284,36 @@ export default {
     height: 150%;
     width: 100%;
     background-color: #eaedf1;
+}
+
+.dialog_avatar {
+    width: 100px;
+    height: 100px;
+}
+
+.dialog_name {
+    font-family: 'Genshin';
+    font-size: 30px;
+    position: relative;
+    left: 20px;
+    bottom: 40px;
+}
+
+.dialog_access {
+    font-family: 'Genshin';
+    font-size: 16px;
+}
+
+.dialog_access::placeholder {
+    font-family: 'Genshin';
+    font-size: 16px;
+}
+
+.dialog_button {
+    font-family: 'Genshin';
+    font-size: 16px;
+    position: relative;
+    top: 10px;
+    width: 100%
 }
 </style>

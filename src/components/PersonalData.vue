@@ -49,13 +49,13 @@
         </el-aside>
         <el-main>
           <span class="msg_item">头像</span>
-          <el-upload action="http://localhost:9000/file/upload" :on-change="saveImgURL" accept=".jpg, .jpeg, .png">
+          <el-upload action="http://localhost:9000/file/upload" :on-success="saveFileURL">
             <el-button circle>
               <el-avatar :src="modifyForm.avatar"> </el-avatar>
             </el-button>
           </el-upload>
           <br /><br />
-          <el-button style="margin-left: 90px; width: 200px" @click="updateMessage">
+          <el-button style="margin-left: 90px; width: 200px; font-family: Genshin; font-size: 18px" @click="updateMessage">
             保存
           </el-button>
         </el-main>
@@ -164,7 +164,7 @@ export default {
       // 填充数据
       this.modifyForm = res;
     },
-    // 保存头像路径
+    // 保存文件路径
     saveImgURL(file) {
       this.modifyForm.avatar = file.response;
       this.updateMessage();
